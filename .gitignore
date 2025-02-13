@@ -11,6 +11,7 @@ out/
 */mvn
 */target/*
 */*.log/
+.idea
 
 ### Eclipse ###
 .apt_generated
