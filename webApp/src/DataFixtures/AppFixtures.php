@@ -36,10 +36,12 @@ class AppFixtures extends Fixture
         }
 
         $competences = [];
-        $listElements = ['BR', 'JD', 'MN', 'IF', 'AD'];
-        for ($i = 0; $i < count($listElements); $i++) {
+        $list = ['BR' => 'Bricolage', 'JD' => 'Jardinage', 'MN' => 'Ménage', 'IF' => 'Informatique', 'AD' => 'Administration'];
+        for ($i = 0; $i < count($list); $i++) {
             $competence = new Competence();
-            $competence->setType($listElements[$i]);
+            $type = array_keys($list)[$i];
+            $competence->setType($type);
+            $competence->setLibelle($list[$type]);
             $manager->persist($competence);
             $competences[] = $competence;
         }
@@ -58,7 +60,8 @@ class AppFixtures extends Fixture
         }
 
         foreach ($salaries as $salarie) {
-            foreach ($competences as $competence) {
+            $randomCompetences = $faker->randomElements($competences, mt_rand(1, 3));
+            foreach ($randomCompetences as $competence) {
                 $salarieCompetence = new SalarieCompetence();
                 $salarieCompetence->setSalarie($salarie);
                 $salarieCompetence->setCompetence($competence);

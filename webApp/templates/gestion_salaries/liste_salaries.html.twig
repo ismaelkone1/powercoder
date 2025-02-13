@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste salariés{% endblock %}
+
+{% block body %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="sm:flex sm:items-center mb-8">
+        <div class="sm:flex-auto">
+            <h1 class="text-2xl font-semibold text-gray-900">Affichage de la liste des salariés</h1>
+            <p class="mt-2 text-sm text-gray-700">Présentation des salariés et leurs compétences</p>
+        </div>
+        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+            <a href="{{ path('app_gestion_salaries_create') }}" 
+               class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                Créer Salarié
+            </a>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for salarie in salaries %}
+            <div class="bg-white shadow rounded-lg p-6 hover:shadow-lg transition-shadow duration-300">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold text-gray-900">{{ salarie.nom }}</h2>
+                </div>
+                
+                <div class="space-y-4">
+                    {% for competence in salarie.salarieCompetences %}
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">
+                                    {{ competence.competence.libelle }} ({{ competence.competence.type }})
+                                </span>
+                                <span class="text-sm font-medium text-gray-700">
+                                    {{ competence.interet }}/10
+                                </span>
+                            </div>
+                            {% set progressColor = 'bg-red-500' %}
+                            {% if competence.interet > 6 %}
+                                {% set progressColor = 'bg-green-500' %}
+                            {% elseif competence.interet > 3 %}
+                                {% set progressColor = 'bg-yellow-500' %}
+                            {% endif %}
+                            
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="{{ progressColor }} h-2.5 rounded-full transition-all duration-500" 
+                                     style="width: {{ competence.interet * 10 }}%">
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <div class="col-span-full text-center py-12">
+                <p class="text-gray-500">Aucun salarié trouvé</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

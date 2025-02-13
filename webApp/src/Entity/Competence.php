@@ -18,6 +18,10 @@ class Competence
     #[ORM\Column(length: 2)]
     private ?string $type = null;
 
+
+    #[ORM\Column(length: 50)]
+    private ?string $libelle = null;
+
     /**
      * @var Collection<int, Besoin>
      */
@@ -27,7 +31,7 @@ class Competence
     /**
      * @var Collection<int, SalarieCompetence>
      */
-    #[ORM\OneToMany(targetEntity: SalarieCompetence::class, mappedBy: 'competence')]
+    #[ORM\OneToMany(targetEntity: SalarieCompetence::class, mappedBy: 'competence', cascade: ['remove'], orphanRemoval: true)]
     private Collection $salarieCompetences;
 
     public function __construct()
@@ -103,6 +107,18 @@ class Competence
                 $salarieCompetence->setCompetence(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    public function setLibelle(string $libelle): static
+    {
+        $this->libelle = $libelle;
 
         return $this;
     }

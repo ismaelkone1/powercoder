@@ -169,6 +169,10 @@ public class Evolution {
             ArrayList<Affectation> affectation = genererAffectationsAleatoires();
             //On ajoute l'affectation à la liste si elle n'est pas déjà présente
             while (affectations.contains(affectation)) {
+                //On vérifie que l'affectation n'est pas déjà présente
+                while (affectations.contains(affectation)) {
+                    affectation = genererAffectationsAleatoires();
+                }
                 affectation = genererAffectationsAleatoires();
             }
             affectations.add(affectation);
