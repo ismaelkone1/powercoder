@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   # Base de données PostgreSQL
   servicedating.db:
@@ -31,3 +33,17 @@ services:
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER:-root}:${POSTGRES_PASSWORD:-root}@servicedating.db:5432/${POSTGRES_DB:-ccd}
     restart: always
+
+  # Service OptiApp Java
+  optiapp:
+    build:
+      context: ./optiApp/build
+    container_name: optiapp
+    volumes:
+      - ./optiApp:/usr/src/app
+    ports:
+      - "8090:8080"
+    depends_on:
+      - servicedating.db
+    command: ["tail", "-f", "/dev/null"]
+
