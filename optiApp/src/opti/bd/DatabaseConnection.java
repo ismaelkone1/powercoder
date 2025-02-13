@@ -4,6 +4,7 @@ import opti.Besoin;
 import opti.Client;
 import opti.Competence;
 import opti.Salarie;
+import opti.Client;
 
 import java.sql.*;
 import java.util.HashSet;
@@ -90,6 +91,14 @@ public class DatabaseConnection {
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                //crée le client a partir de la colonne client_id et de la table user
+                String queryClient = "SELECT * FROM user WHERE id = ?";
+                PreparedStatement psClient = conn.prepareStatement(queryClient);
+                psClient.setInt(1, rs.getInt("client_id"));
+                ResultSet rsClient = psClient.executeQuery();
+                rsClient.next();
+                Client client = new Client(rsClient.getInt("id"), rsClient.getString("nom"));
+
                 Besoin besoin = new Besoin(rs.getInt("id"), rs.getDate("date"), rs.getInt("competence_id"));
                 besoins.add(besoin);
             }
