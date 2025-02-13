@@ -40,4 +40,30 @@ class BesoinRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findAllBesoins(): array
+    {
+        return $this->getEntityManager()->getRepository(Besoin::class)
+            ->createQueryBuilder('b')
+            ->leftJoin('b.competences', 'c')
+            ->leftJoin('b.salaries', 's')
+            ->addSelect('c', 's')
+            ->orderBy('b.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllBesoinsByClientId($id): array
+    {
+        return $this->getEntityManager()->getRepository(Besoin::class)
+            ->createQueryBuilder('b')
+            ->leftJoin('b.competences', 'c')
+            ->leftJoin('b.salaries', 's')
+            ->addSelect('c', 's')
+            ->where('b.client = :id')
+            ->setParameter('id', $id)
+            ->orderBy('b.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }
