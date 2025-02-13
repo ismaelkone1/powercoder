@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des compétences
+{% endblock %}
+
+{% block body %}
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+		<div class="sm:flex sm:items-center">
+			<div class="sm:flex-auto">
+				<h1 class="text-2xl font-semibold text-gray-900">Gestion des compétences</h1>
+				<p class="mt-2 text-sm text-gray-700">Liste des compétences disponibles dans le système.</p>
+			</div>
+			<div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+				<a href="{{ path('admin_competence_new') }}" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+					Nouvelle compétence
+				</a>
+			</div>
+		</div>
+
+		{% for message in app.flashes('success') %}
+			<div class="rounded-md bg-green-50 p-4 mt-4">
+				<div class="flex">
+					<div class="flex-shrink-0">
+						<svg class="h-5 w-5 text-green-400" viewbox="0 0 20 20" fill="currentColor">
+							<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+						</svg>
+					</div>
+					<div class="ml-3">
+						<p class="text-sm font-medium text-green-800">{{ message }}</p>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+
+		<div class="mt-8 flex flex-col">
+			<div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+				<div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+					<div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+						<table class="min-w-full divide-y divide-gray-300">
+							<thead class="bg-gray-50">
+								<tr>
+									<th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Type</th>
+									<th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Libellé</th>
+									<th scope="col" class="relative px-6 py-3">
+										<span class="sr-only">Actions</span>
+									</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-gray-200 bg-white">
+								{% for competence in competences %}
+									<tr>
+										<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
+											{{ competence.type }}
+										</td>
+										<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
+											{{ competence.libelle }}
+										</td>
+										<td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+											<a href="{{ path('admin_competence_edit', {'id': competence.id}) }}" class="text-indigo-600 hover:text-indigo-900 mr-4">Modifier</a>
+											<form method="post" action="{{ path('admin_competence_delete', {'id': competence.id}) }}" class="inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette compétence ?');">
+												<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ competence.id) }}">
+												<button type="submit" class="text-red-600 hover:text-red-900">Supprimer</button>
+											</form>
+										</td>
+									</tr>
+								{% else %}
+									<tr>
+										<td colspan="2" class="px-6 py-4 text-sm text-gray-500 text-center">Aucune compétence trouvée</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+

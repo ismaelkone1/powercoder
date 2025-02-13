@@ -18,6 +18,10 @@ class Competence
     #[ORM\Column(length: 2)]
     private ?string $type = null;
 
+
+    #[ORM\Column(length: 50)]
+    private ?string $libelle = null;
+
     /**
      * @var Collection<int, Besoin>
      */
@@ -103,6 +107,18 @@ class Competence
                 $salarieCompetence->setCompetence(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    public function setLibelle(string $libelle): static
+    {
+        $this->libelle = $libelle;
 
         return $this;
     }
