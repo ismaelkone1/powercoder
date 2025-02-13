@@ -26,7 +26,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Install Symfony CLI
 RUN curl -sS https://get.symfony.com/cli/installer | bash \
-    && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
+    && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony \
+    && ln -s /usr/local/bin/symfony /usr/bin/symfony
 
 # Copier composer.json et composer.lock, mais assurez-vous que le contexte soit correct
 COPY webApp/composer.json /var/www/html/
