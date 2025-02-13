@@ -6,16 +6,20 @@ services:
     image: 'postgres:latest'
     env_file: ./webApp/back.env
     ports:
-      - '5432:5432'
+      # - '5432:5432'
+      - '32431:5432'
     volumes:
-      - ./webApp/app/sql:/var/sql
+      - ./webApp/app/sql:/var/lib/postgresql/data
     restart: always
 
   # Service Administration des bases SQL (Adminer)
   adminer:
     image: 'adminer:latest'
     ports:
-      - '8080:8080'
+      # - '8080:8080'
+      - '32432:8080'
+    restart: always
+    command: php -S 0.0.0.0:8080 -t /var/www/html
 
   # Backend Symfony API
   servicedating.backend:
@@ -26,11 +30,13 @@ services:
     volumes:
       - ./webApp:/var/www/html
     ports:
-      - "8889:8000"
-    command: symfony server:start --no-tls --port=8000 --allow-http --no-interaction --ansi --listen-ip=0.0.0.0
+      # - "8889:8000"
+      - "32433:8000"
+    command: php -S 0.0.0.0:8000 -t /var/www/html/public
     depends_on:
       - servicedating.db
     environment:
+      - APP_ENV=prod
       - DATABASE_URL=postgresql://${POSTGRES_USER:-root}:${POSTGRES_PASSWORD:-root}@servicedating.db:5432/${POSTGRES_DB:-ccd}
     restart: always
 
@@ -42,8 +48,9 @@ services:
     volumes:
       - ./optiApp:/usr/src/app
     ports:
-      - "8090:8080"
+      # - "8090:8080"
+      - "32434:8080"
     depends_on:
       - servicedating.db
     command: ["tail", "-f", "/dev/null"]
-
+    restart: always

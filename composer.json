@@ -1,0 +1,5 @@
+{
+    "require": {
+        "symfony/requirements-checker": "^2.0"
+    }
+}

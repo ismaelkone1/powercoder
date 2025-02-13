@@ -1,5 +1,7 @@
 # Dockerfile for Symfony Backend 
 FROM php:8.2-fpm
+
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     npm \
     curl \
@@ -7,25 +9,47 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     zip \
-    unzip
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+    unzip \
+    git \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
 # Install Postgres PDO
 RUN apt-get update && apt-get install -y libpq-dev \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pdo_pgsql pgsql
+
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 # Install Symfony CLI
 RUN curl -sS https://get.symfony.com/cli/installer | bash \
     && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
 
-# Copier composer.json et composer.lock, mais assurez-vous que le contexte soit correct
-COPY ./webApp/composer.json /var/www/html/
+# Set working directory
 WORKDIR /var/www/html
 
-# Installer les dépendances avant le montage des volumes
-RUN composer install
+# Copy composer.json and composer.lock
+COPY ./webApp/composer.json ./webApp/composer.lock ./
+
+# Install PHP dependencies without running scripts
+RUN composer install --no-scripts --no-interaction --optimize-autoloader
+
+# Copy the rest of the application code
+COPY ./webApp .
+
+# Install Node.js dependencies and build assets
 RUN npm install
+RUN npm run build
+
+# Set permissions
+RUN chown -R www-data:www-data var
+RUN chown -R www-data:www-data public
+
+# Expose port 80
+EXPOSE 80
+
+# Start PHP-FPM server
+CMD ["php-fpm"]
