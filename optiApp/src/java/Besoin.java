@@ -1,16 +1,24 @@
+package java;
+
 import java.util.ArrayList;
 import java.util.Date;
 
-class Besoin {
+public class Besoin {
     private int id;
-    private String description;
+    private Client client;
     private Date date;
     private String type;
     private ArrayList<Competence> competencesRequises;
 
-    public Besoin(int id, String description, Date date, String type, ArrayList<Competence> competencesRequises) {
+    public Besoin(int id, Date date, String type) {
         this.id = id;
-        this.description = description;
+        this.date = date;
+        this.type = type;
+        this.competencesRequises = new ArrayList<>();
+    }
+
+    public Besoin(int id, Date date, String type, ArrayList<Competence> competencesRequises) {
+        this.id = id;
         this.date = date;
         this.type = type;
         this.competencesRequises = competencesRequises;

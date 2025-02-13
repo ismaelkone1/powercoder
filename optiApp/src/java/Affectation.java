@@ -1,4 +1,6 @@
-class Affectation {
+package java;
+
+public class Affectation {
     private Salarie salarie;
     private Besoin besoin;
     private double score;

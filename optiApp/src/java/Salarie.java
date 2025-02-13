@@ -1,6 +1,8 @@
+package java;
+
 import java.util.HashMap;
 
-class Salarie {
+public class Salarie {
     private int id;
     private String nom;
     private HashMap<Competence, Integer> competences;
