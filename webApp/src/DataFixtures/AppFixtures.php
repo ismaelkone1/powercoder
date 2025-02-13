@@ -38,7 +38,10 @@ class AppFixtures extends Fixture
         $competences = [];
         for ($i = 0; $i < 10; $i++) {
             $competence = new Competence();
-            $competence->setType($faker->randomElement(['BR', 'JD', 'MN', 'IF', 'AD']));
+            $list = ['BR' => 'Bricolage', 'JD' => 'Jardinage', 'MN' => 'Ménage', 'IF' => 'Informatique', 'AD' => 'Administration'];
+            $type = $faker->randomElement(array_keys($list));
+            $competence->setType($type);
+            $competence->setLibelle($list[$type]);
             $manager->persist($competence);
             $competences[] = $competence;
         }
