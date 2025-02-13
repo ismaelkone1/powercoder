@@ -10,7 +10,7 @@ public class MainEvaluation {
         // On crée n listes d'affectations
         for(int i = 0; i < 10; i++) {
             List<Affectation> affectations = new ArrayList<>();
-
+            System.out.println("Hello world!");
 
         }
 
