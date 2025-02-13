@@ -4,29 +4,26 @@ namespace App\Form;
 
 use App\Entity\Besoin;
 use App\Entity\Competence;
-use App\Entity\Salarie;
-use App\Entity\User;
+use Faker\Provider\ar_EG\Text;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class BesoinType extends AbstractType
+class CompetenceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libelle')
-            ->add('date', null, [
-                'widget' => 'single_text',
+            ->add('type', TextType::class, [
+                'label' => 'Type de compétence (2 lettres majuscules)',
+                'attr' => ['maxlength' => 2]
             ])
-            ->add('competences', EntityType::class, [
-                'class' => Competence::class,
-                'choice_label' => 'libelle',
-                'multiple' => true,
-                'expanded' => false,
-                'by_reference' => false,
+            ->add('libelle', TextType::class, [
+                'label' => 'Libellé de la compétence',
+                'attr' => ['maxlength' => 50]
             ])
             ->add('save', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
@@ -38,7 +35,7 @@ class BesoinType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Besoin::class,
+            'data_class' => Competence::class,
         ]);
     }
 }
