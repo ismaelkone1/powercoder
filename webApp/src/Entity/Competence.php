@@ -18,6 +18,10 @@ class Competence
     #[ORM\Column(length: 2)]
     private ?string $type = null;
 
+
+    #[ORM\Column(length: 50)]
+    private ?string $libelle = null;
+
     /**
      * @var Collection<int, Besoin>
      */
@@ -107,15 +111,15 @@ class Competence
         return $this;
     }
 
-    public function getFullName(): string
+    public function getLibelle(): ?string
     {
-        return match ($this->type) {
-            'BR' => 'Bricolage',
-            'JD' => 'Jardinage',
-            'MN' => 'Ménage',
-            'IF' => 'Informatique',
-            'AD' => 'Administration',
-            default => 'Inconnu',
-        };
+        return $this->libelle;
+    }
+
+    public function setLibelle(string $libelle): static
+    {
+        $this->libelle = $libelle;
+
+        return $this;
     }
 }
