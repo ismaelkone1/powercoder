@@ -11,18 +11,18 @@ import java.util.Random;
 
 public class Evolution {
 
-    public static HashMap<ArrayList<Affectation>, Integer> evaluerAffectations(HashMap<ArrayList<Affectation>, Integer> affectationsMap) {
-        HashMap<ArrayList<Affectation>, Integer> scoresMap = new HashMap<>();
+    public static HashMap<ArrayList<Affectation>, Double> evaluerAffectations(HashMap<ArrayList<Affectation>, Integer> affectationsMap) {
+        HashMap<ArrayList<Affectation>, Double> scoresMap = new HashMap<>();
 
         for (ArrayList<Affectation> affectations : affectationsMap.keySet()) {
-            int score = calculerScore(affectations);
+            double score = calculerScore(affectations);
             scoresMap.put(affectations, score);
         }
 
         return scoresMap;
     }
 
-    public static int calculerScore(ArrayList<Affectation> affectations) {
+    public static double calculerScore(ArrayList<Affectation> affectations) {
         int scoreTotal = 0;
 
         // Stocker les besoins réalisés pour chaque client
@@ -36,9 +36,11 @@ public class Evolution {
 
         for (Affectation affectation : affectations) {
             // Calculer le score de l'affectation
-            int points = affectation.calculerScore(besoinsRealisesParClient, salariesAffectes, clientsAvoirBesoin);
+            affectation.calculerScore(besoinsRealisesParClient, salariesAffectes, clientsAvoirBesoin);
 
-            // Ajouter le score de l'affectation au score total
+            double points = affectation.getScore();
+
+                    // Ajouter le score de l'affectation au score total
             scoreTotal += points;
 
             // Comptabiliser le besoin réalisé pour ce client

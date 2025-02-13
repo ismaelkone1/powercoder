@@ -23,7 +23,7 @@ public class DatabaseConnection {
             if (conn != null) {
                 System.out.println("Connexion réussie à la java.java.java.bd !");
             }
-            System.out.println(getToutesLesCompetences());
+            System.out.println(getTousLesBesoins());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,13 +48,14 @@ public class DatabaseConnection {
                     int competenceId = rsCompetences.getInt("competence_id");
                     int interet = rsCompetences.getInt("interet");
                     //Récupérer le nom de la compétence
-                    String queryNomCompetence = "SELECT type FROM competence WHERE id = ?";
+                    String queryNomCompetence = "SELECT * FROM competence WHERE id = ?";
                     PreparedStatement psNomCompetence = conn.prepareStatement(queryNomCompetence);
                     psNomCompetence.setInt(1, competenceId);
                     ResultSet rsTypeCompetence = psNomCompetence.executeQuery();
                     if (rsTypeCompetence.next()) {
                         String typeCompetence = rsTypeCompetence.getString("type");
-                        Competence competence = new Competence(typeCompetence);
+                        int idCompetence = rsTypeCompetence.getInt("id");
+                        Competence competence = new Competence(idCompetence, typeCompetence);
                         salarie.ajouterCompetence(competence, interet);
                     }
                 }
@@ -74,7 +75,7 @@ public class DatabaseConnection {
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Competence competence = new Competence(rs.getString("type"));
+                Competence competence = new Competence(rs.getInt("id") , rs.getString("type"));
                 competences.add(competence);
             }
         } catch (SQLException e) {
@@ -91,33 +92,62 @@ public class DatabaseConnection {
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                //crée le client a partir de la colonne client_id et de la table user
-                String queryClient = "SELECT * FROM user WHERE id = ?";
-                PreparedStatement psClient = conn.prepareStatement(queryClient);
-                psClient.setInt(1, rs.getInt("client_id"));
-                ResultSet rsClient = psClient.executeQuery();
-                rsClient.next();
-                Client client = new Client(rsClient.getInt("id"), rsClient.getString("nom"));
+                ////crée le client a partir de la colonne client_id et de la table user
+                //String queryClient = "SELECT * FROM user WHERE id = ?";
+                //PreparedStatement psClient = conn.prepareStatement(queryClient);
+                //psClient.setString(1, rs.getString("client_id"));
+                //ResultSet rsClient = psClient.executeQuery();
+                //rsClient.next();
+
+                //récupère tout les clients
+                HashSet<Client> clients = getTousLesClients();
+
+                //récupère le client en fonction de l'id
+                Client client = clients.stream().filter(c -> {
+                    try {
+                        return c.getId() == rs.getString("id");
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).findFirst().orElse(null);
+
+                //récupère le type avec la table competence_besoin
+                String queryCompetence = "SELECT * FROM competence_besoin WHERE besoin_id = ?";
+                PreparedStatement psCompetence = conn.prepareStatement(queryCompetence);
+                psCompetence.setInt(1, rs.getInt("id"));
+                ResultSet rsCompetence = psCompetence.executeQuery();
+                rsCompetence.next();
+                //récupère tout les compétences
+                HashSet<Competence> competences = getToutesLesCompetences();
+                //récupère la compétence en fonction de l'id
+                Competence competence = competences.stream().filter(c -> {
+                    try {
+                        return c.getId() == rsCompetence.getInt("competence_id");
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).findFirst().orElse(null);
 
 
-                Besoin besoin = new Besoin(rs.getInt("id"), rs.getDate("date"), rs.getInt("competence_id"));
+                Besoin besoin = new Besoin(rs.getInt("id"), rs.getDate("date"), competence.getType(), client);
                 besoins.add(besoin);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return besoins;
     }
 
     // Méthode pour récupérer
     public static HashSet<Client> getTousLesClients() {
         HashSet<Client> clients = new HashSet<>();
         try (Connection conn = connect()) {
-            String query = "SELECT * FROM client";
+            String query = "SELECT \"id\", \"nom\" FROM \"user\"";
+
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Client client = new Client(rs.getInt("id"), rs.getString("nom"));
+                Client client = new Client(rs.getString("id"), rs.getString("nom"));
                 clients.add(client);
             }
         } catch (SQLException e) {

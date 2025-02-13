@@ -16,18 +16,18 @@ public class Affectation {
         this.client = client;
     }
 
-    public int calculerScore(HashMap<Client, Integer> besoinsRealisesParClient, HashSet<Salarie> salariesAffectes, HashSet<Client> clientsAvoirBesoin) {
+    public void calculerScore(HashMap<Client, Double> besoinsRealisesParClient, HashSet<Salarie> salariesAffectes, HashSet<Client> clientsAvoirBesoin) {
         // Vérification de la compétence requise (Règle 3)
         if (!salarie.getCompetences().containsKey(besoin.getCompetencesRequises().get(0))) {
             System.out.println("Affectation invalide : " + salarie + " ne possède pas la compétence requise pour " + besoin);
-            return 0; // Affectation invalide
+            return;
         }
 
         // Ajout du score basé sur l'intérêt du salarié (Règle 4)
-        int points = salarie.getInteret(besoin.getCompetencesRequises().get(0));
+        double points = salarie.getInteret(besoin.getCompetencesRequises().get(0));
 
         // Appliquer le malus dégressif pour les besoins du même client (Règle 5)
-        int besoinsRealises = besoinsRealisesParClient.getOrDefault(client, 0);
+        double besoinsRealises = besoinsRealisesParClient.getOrDefault(client, 0.0);
         if (besoinsRealises > 1) {
             points -= besoinsRealises - 1; // Applique un malus dégressif
         }
@@ -39,7 +39,8 @@ public class Affectation {
         // Marquer le salarié comme actif
         salariesAffectes.add(salarie);
 
-        return points;
+        this.score = points;
+        //return points;
     }
 
 

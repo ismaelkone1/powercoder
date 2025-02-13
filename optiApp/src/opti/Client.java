@@ -3,11 +3,11 @@ package opti;
 import java.util.ArrayList;
 
 public class Client {
-    private int id;
+    private String id;
     private String nom;
     private ArrayList<Besoin> besoins;
 
-    public Client(int id, String nom) {
+    public Client(String id, String nom) {
         this.id = id;
         this.nom = nom;
         this.besoins = new ArrayList<>();
@@ -19,5 +19,9 @@ public class Client {
 
     public ArrayList<Besoin> getBesoins() {
         return besoins;
+    }
+
+    public String getId() {
+        return id;
     }
 }

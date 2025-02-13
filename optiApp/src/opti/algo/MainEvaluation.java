@@ -1,11 +1,14 @@
 package opti.algo;
-import opti.Affectation;
+import opti.*;
 
 import opti.Affectation;
+import opti.bd.DatabaseConnection;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class MainEvaluation {
@@ -18,7 +21,8 @@ public class MainEvaluation {
 
             // Initialisation avec une liste d'affectations
             ArrayList<ArrayList<Affectation>> affectations = new ArrayList<>();
-            for (int i = 0; i < 40; i++) { // 40 solutions initiales
+            //On génère 40 listes d'affectations aléatoires
+            for (int i = 0; i < 40; i++) {
                 affectations.add(genererAffectationsAleatoires());
             }
 
@@ -32,6 +36,8 @@ public class MainEvaluation {
                 }
 
                 Evolution evolution = new Evolution();
+                //TODO : évaluation des affectations
+
                 //stats = evolution.evoluer(stats);
                 affectations = evolution.evoluer(stats);
 
@@ -51,7 +57,25 @@ public class MainEvaluation {
     }
 
     private static ArrayList<Affectation> genererAffectationsAleatoires() {
-        // Générer une affectation aléatoire selon tes contraintes
-        return new ArrayList<>(); // À implémenter
+        ArrayList<Affectation> affectations = new ArrayList<>();
+
+        //On récupère les salariés
+        HashSet<Salarie> salaries = DatabaseConnection.getTousLesSalaries();
+        //On récupère les besoins
+        HashSet<Besoin> besoins = DatabaseConnection.getTousLesBesoins();
+        //ON récupère les clients
+        HashSet<Client> clients = DatabaseConnection.getTousLesClients();
+
+        //On génère les affectations en fonction du nombre de besoins
+        for (int i = 0; i < besoins.size(); i++) {
+            Salarie salarie = (Salarie) salaries.toArray()[(int) (Math.random() * salaries.size())];
+            Besoin besoin = (Besoin) besoins.toArray()[(int) (Math.random() * besoins.size())];
+            Client client = (Client) clients.toArray()[(int) (Math.random() * clients.size())];
+
+            Affectation affectation = new Affectation(salarie, besoin, 0, client);
+            affectations.add(affectation);
+        }
+
+        return affectations;
     }
 }
