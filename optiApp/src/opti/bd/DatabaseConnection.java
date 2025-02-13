@@ -7,6 +7,7 @@ import opti.Salarie;
 import opti.Client;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class DatabaseConnection {
@@ -128,8 +129,10 @@ public class DatabaseConnection {
                     }
                 }).findFirst().orElse(null);
 
+                ArrayList<Competence> competencesRequises = new ArrayList<>();
+                competencesRequises.add(competence);
 
-                Besoin besoin = new Besoin(rs.getInt("id"), rs.getDate("date"), competence.getType(), client);
+                Besoin besoin = new Besoin(rs.getInt("id"), rs.getDate("date"), competence.getType(), competencesRequises);
                 besoins.add(besoin);
             }
         } catch (SQLException e) {

@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class Evolution {
 
-    public static HashMap<ArrayList<Affectation>, Double> evaluerAffectations(HashMap<ArrayList<Affectation>, Integer> affectationsMap) {
+    public static HashMap<ArrayList<Affectation>, Double> evaluerAffectations(HashMap<ArrayList<Affectation>, Double> affectationsMap) {
         HashMap<ArrayList<Affectation>, Double> scoresMap = new HashMap<>();
 
         for (ArrayList<Affectation> affectations : affectationsMap.keySet()) {

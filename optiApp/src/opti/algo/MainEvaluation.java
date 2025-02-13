@@ -14,40 +14,69 @@ import java.util.List;
 public class MainEvaluation {
     public static void main(String[] args) {
         // Fichier de sortie pour les logs
-        String fileName = "Ressources/evolution_affectations.csv";
+        //String fileName = "Ressources/evolution_affectations.csv";
+        //On lance la bd
+        DatabaseConnection.main(args);
 
-        try (FileWriter writer = new FileWriter(fileName)) {
-            writer.write("Iteration;Meilleur Score;Moyenne Score\n");
-
-            // Initialisation avec une liste d'affectations
-            ArrayList<ArrayList<Affectation>> affectations = new ArrayList<>();
-            //On génère 40 listes d'affectations aléatoires
-            for (int i = 0; i < 40; i++) {
-                affectations.add(genererAffectationsAleatoires());
-            }
-
-            for (int iteration = 0; iteration < 50; iteration++) {
-                System.out.println("Iteration " + iteration);
-
-                // Évaluation des affectations
-                HashMap<ArrayList<Affectation>, Double> stats = new HashMap<>();
-                for (ArrayList<Affectation> affectation : affectations) {
-                    stats.put(affectation, 0.0);
-                }
-
-                Evolution evolution = new Evolution();
-                //TODO : évaluation des affectations
-
-                //stats = evolution.evoluer(stats);
-                affectations = evolution.evoluer(stats);
-
-                // Log des stats
-                //logStats(writer, iteration + 1, stats);
-            }
-            System.out.println("Fin de la simulation. Données enregistrées dans " + fileName);
-        } catch (Exception e) {
-            e.printStackTrace();
+        // Initialisation avec une liste d'affectations
+        ArrayList<ArrayList<Affectation>> affectations = new ArrayList<>();
+        //On génère 40 listes d'affectations aléatoires
+        for (int i = 0; i < 15; i++) {
+            affectations.add(genererAffectationsAleatoires());
         }
+
+        System.out.println("Les affectations initiales sont :");
+        for (ArrayList<Affectation> affectation : affectations) {
+            System.out.println(affectation);
+        }
+
+        for (int iteration = 0; iteration < 3; iteration++) {
+            System.out.println("Iteration " + iteration);
+
+            // Évaluation des affectations
+            HashMap<ArrayList<Affectation>, Double> stats = new HashMap<>();
+            for (ArrayList<Affectation> affectation : affectations) {
+                stats.put(affectation, 0.0);
+            }
+
+            Evolution evolution = new Evolution();
+            //évaluation des affectations
+            stats = evolution.evaluerAffectations(stats);
+            //Détail de l'évaluation
+            for (ArrayList<Affectation> affectation : stats.keySet()) {
+                System.out.println("Affectation : " + affectation + " Score : " + stats.get(affectation));
+            }
+
+
+            //stats = evolution.evoluer(stats);
+            affectations = evolution.evoluer(stats);
+
+            //On affiche les affectations
+            for (ArrayList<Affectation> affectation : affectations) {
+                System.out.println(affectation);
+            }
+
+            // Log des stats
+            //logStats(writer, iteration + 1, stats);
+        }
+        System.out.println("Fin de la simulation");
+        System.out.println("Affichage de la meilleure affectation :");
+        System.out.println(affectations.get(0).get(0));
+
+        //On affiche le détail de la meilleure affectation
+        for (Affectation affectation : affectations.get(0)) {
+            System.out.println("Salarié : "+affectation.getSalarie());
+            System.out.println("Compétences du salarié : ");
+            for (Competence competence : affectation.getSalarie().getCompetences().keySet()) {
+                System.out.println("Compétence : "+competence.getType()+" Intérêt : "+affectation.getSalarie().getInteret(competence));
+            }
+
+            System.out.println("Besoin : "+affectation.getBesoin());
+            System.out.println("Compétences requises pour le besoin : "+affectation.getBesoin().getCompetencesRequises().get(0).getType());
+
+            //Affichage des salariés
+        }
+
     }
 
     private static void logStats(FileWriter writer, int iteration, HashMap<List<Affectation>, Integer> stats) throws IOException {
