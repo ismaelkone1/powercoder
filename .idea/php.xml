@@ -145,6 +145,14 @@
       <path value="$PROJECT_DIR$/webApp/vendor/doctrine/doctrine-fixtures-bundle" />
       <path value="$PROJECT_DIR$/webApp/vendor/symfony/webpack-encore-bundle" />
       <path value="$PROJECT_DIR$/webApp/vendor/fakerphp/faker" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/uid" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/polyfill-uuid" />
+      <path value="$PROJECT_DIR$/webApp/vendor/ramsey/collection" />
+      <path value="$PROJECT_DIR$/webApp/vendor/ramsey/uuid-doctrine" />
+      <path value="$PROJECT_DIR$/webApp/vendor/ramsey/uuid" />
+      <path value="$PROJECT_DIR$/webApp/vendor/brick/math" />
+      <path value="$PROJECT_DIR$/webApp/vendor/knplabs/knp-paginator-bundle" />
+      <path value="$PROJECT_DIR$/webApp/vendor/knplabs/knp-components" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />

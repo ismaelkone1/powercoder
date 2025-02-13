@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -25,14 +27,16 @@ final class BesoinController extends AbstractController
     public function listeBesoins(EntityManagerInterface $emi): Response
     {
         try {
-            $besoins = $emi->getRepository(Besoin::class)->findAllBesoins();
+            $query = $emi->getRepository(Besoin::class)->createQueryBuilder('b')->getQuery();
+            $page = $request->query->getInt('page', 1);
+            $pagination = $paginator->paginate($query, $page, 5);
         } catch (\Exception $e) {
             return new Response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return $this->render('besoin/liste_besoin.html.twig', [
             'controller_name' => 'BesoinController',
-            'besoins' => $besoins
+            'pagination' => $pagination
         ]);
     }
 

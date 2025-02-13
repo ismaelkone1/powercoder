@@ -24,15 +24,22 @@
 						<table class="min-w-full divide-y divide-gray-300">
 							<thead class="bg-gray-50">
 								<tr>
-									<th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Description</th>
-									<th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Date</th>
-									<th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Compétences requises</th>
-									<th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Salariés affectés</th>
+									<th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+										Description
+									</th>
+									<th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Date
+									</th>
+									<th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+										Compétences requises
+									</th>
+									<th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Salariés
+										                                    affectés
+									</th>
 									<th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Actions</th>
 								</tr>
 							</thead>
 							<tbody class="divide-y divide-gray-200 bg-white">
-								{% for besoin in besoins %}
+								{% for besoin in pagination.items %}
 									<tr>
 										<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">{{ besoin.libelle }}</td>
 										<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{{ besoin.date|date('d/m/Y') }}</td>
@@ -66,13 +73,18 @@
 									</tr>
 								{% else %}
 									<tr>
-										<td colspan="5" class="px-6 py-4 text-sm text-gray-500 text-center">Aucun besoin trouvé</td>
+										<td colspan="5" class="px-6 py-4 text-sm text-gray-500 text-center">Aucun besoin
+											                                        trouvé
+										</td>
 									</tr>
 								{% endfor %}
 							</tbody>
 						</table>
 					</div>
 				</div>
+			</div>
+			<div class="mt-4">
+				{{ knp_pagination_render(pagination) }}
 			</div>
 		</div>
 	</div>

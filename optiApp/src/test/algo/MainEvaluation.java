@@ -8,7 +8,7 @@ import java.util.Map;
 public class MainEvaluation {
 
     public static void main(String[] args) {
-        Map<Affectation, >
+        //Map<Affectation, >
         // On crée n listes d'affectations
         for(int i = 0; i < 10; i++) {
             // Tant que la nouvelle liste d'affectation est déjà existante
