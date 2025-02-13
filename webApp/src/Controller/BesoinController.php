@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Besoin;
 use App\Form\BesoinType;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 
 final class BesoinController extends AbstractController
@@ -59,6 +60,24 @@ final class BesoinController extends AbstractController
 
         return $this->render('besoin/create_besoin.html.twig', [
             'controller_name' => 'BesoinController',
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/besoin/{id}/edit', name: 'edit_besoin')]
+    public function edit(Besoin $besoin, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(BesoinType::class, $besoin);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('edit_besoin', ['id' => $besoin->getId()]);
+        }
+
+        return $this->render('besoin/edit_besoin.html.twig', [
+            'besoin' => $besoin,
             'form' => $form->createView(),
         ]);
     }
