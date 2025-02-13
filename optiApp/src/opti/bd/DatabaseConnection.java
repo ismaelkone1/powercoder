@@ -5,9 +5,10 @@ import opti.Client;
 import opti.Competence;
 import opti.Salarie;
 import opti.Client;
-
 import java.sql.*;
 import java.util.HashSet;
+import org.postgresql.PGNotification;
+import org.postgresql.PGConnection;
 
 public class DatabaseConnection {
     private static final String URL = "jdbc:postgresql://localhost:5432/ccd";
@@ -21,10 +22,37 @@ public class DatabaseConnection {
     public static void main(String[] args) {
         try (Connection conn = connect()) {
             if (conn != null) {
-                System.out.println("Connexion réussie à la java.java.java.bd !");
+                System.out.println("Connexion réussie à la bd !");
             }
             System.out.println(getTousLesBesoins());
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            // Activer l'écoute du canal de notification
+            Statement stmt = conn.createStatement();
+            stmt.execute("LISTEN new_besoin_channel;");
+
+            System.out.println("En attente de notifications sur le canal 'new_besoin_channel'...");
+
+            // Boucle pour écouter les notifications
+            while (true) {
+                // Attente d'une notification
+                PGNotification[] notifications = ((PGConnection) conn).getNotifications();
+                if (notifications != null) {
+                    for (PGNotification notification : notifications) {
+                        System.out.println("Notification reçue: " + notification.getParameter());
+
+                        // Vous pouvez maintenant traiter les données JSON envoyées par la procédure stockée
+                        String json = notification.getParameter();
+                        // Utiliser une bibliothèque JSON pour traiter le message
+                        System.out.println("Détails du besoin : " + json);
+                    }
+                }
+                Thread.sleep(1000); // Attendre un peu avant la prochaine vérification des notifications
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
