@@ -24,7 +24,7 @@ final class BesoinController extends AbstractController
     }
 
     #[Route('/admin/besoins', name: 'admin_besoin_list')]
-    public function listeBesoins(EntityManagerInterface $emi): Response
+    public function listeBesoins(EntityManagerInterface $emi, PaginatorInterface $paginator, Request $request): Response
     {
         try {
             $query = $emi->getRepository(Besoin::class)->createQueryBuilder('b')->getQuery();
