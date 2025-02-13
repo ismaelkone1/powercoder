@@ -106,4 +106,16 @@ class Competence
 
         return $this;
     }
+
+    public function getFullName(): string
+    {
+        return match ($this->type) {
+            'BR' => 'Bricolage',
+            'JD' => 'Jardinage',
+            'MN' => 'Ménage',
+            'IF' => 'Informatique',
+            'AD' => 'Administration',
+            default => 'Inconnu',
+        };
+    }
 }

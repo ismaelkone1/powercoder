@@ -16,12 +16,12 @@ final class BesoinController extends AbstractController
     public function listeBesoins(EntityManagerInterface $emi): Response
     {
         try {
-            $besoins = $emi->getRepository(Besoin::class)->findAll();
+            $besoins = $emi->getRepository(Besoin::class)->findAllBesoins();
         } catch (\Exception $e) {
             return new Response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->render('besoin/liste_besoins.html.twig', [
+        return $this->render('besoin/liste_besoin.html.twig', [
             'controller_name' => 'BesoinController',
             'besoins' => $besoins
         ]);
@@ -31,7 +31,7 @@ final class BesoinController extends AbstractController
     public function listeBesoinByClientId(EntityManagerInterface $emi, int $id): Response
     {
         try {
-            $besoins = $emi->getRepository(Besoin::class)->findBy(['client_id' => $id]);
+            $besoins = $emi->getRepository(Besoin::class)->findAllBesoinsByClientId($id);
         } catch (\Exception $e) {
             return new Response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
