@@ -21,6 +21,8 @@ services:
       context: ./
       dockerfile: ./webApp/build/Dockerfile.backend
     container_name: servicedating-backend
+    volumes:
+      - ./webApp:/var/www/html
     ports:
       - "8889:8000"
     command: symfony server:start --no-tls --port=8000 --allow-http --no-interaction --ansi --listen-ip=0.0.0.0
