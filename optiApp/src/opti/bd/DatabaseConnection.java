@@ -1,6 +1,7 @@
 package opti.bd;
 
 import opti.Besoin;
+import opti.Client;
 import opti.Competence;
 import opti.Salarie;
 
@@ -94,4 +95,23 @@ public class DatabaseConnection {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static HashSet<Client> getTousLesClients() {
+        HashSet<Client> clients = new HashSet<>();
+        try (Connection conn = connect()) {
+            String query = "SELECT * FROM client";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Client client = new Client(rs.getInt("id"), rs.getString("nom"));
+                clients.add(client);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return clients;
+    }
 }
