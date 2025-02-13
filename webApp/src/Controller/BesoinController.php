@@ -47,19 +47,19 @@ final class BesoinController extends AbstractController
     {
         $besoin = new Besoin();
         $form = $this->createForm(BesoinType::class, $besoin);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            dd($form->getData());
-            // $entityManager->persist($besoin);
-            // $entityManager->flush();
+            $entityManager->persist($besoin);
+            $entityManager->flush();
 
             return $this->redirectToRoute('create_besoin');
         }
 
         return $this->render('besoin/create_besoin.html.twig', [
             'controller_name' => 'BesoinController',
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 }
