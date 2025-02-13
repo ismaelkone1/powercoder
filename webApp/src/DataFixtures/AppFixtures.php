@@ -49,9 +49,6 @@ class AppFixtures extends Fixture
             $besoin->setDate($faker->dateTimeThisYear);
             $besoin->setClientId($faker->randomElement($users));
 
-            foreach ($faker->randomElements($salaries, 3) as $salarie) {
-                $besoin->addSalary($salarie);
-            }
             foreach ($faker->randomElements($competences, 3) as $competence) {
                 $besoin->addCompetence($competence);
             }
