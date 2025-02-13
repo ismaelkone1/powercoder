@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MessDetectorOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PHPCSFixerOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PHPCodeSnifferOptionsConfiguration">
+    <option name="highlightLevel" value="WARNING" />
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/webApp/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/webApp/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/webApp/vendor/doctrine/doctrine-bundle" />
+      <path value="$PROJECT_DIR$/webApp/vendor/doctrine/doctrine-migrations-bundle" />
+      <path value="$PROJECT_DIR$/webApp/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/webApp/vendor/doctrine/collections" />
+      <path value="$PROJECT_DIR$/webApp/vendor/doctrine/migrations" />
+      <path value="$PROJECT_DIR$/webApp/vendor/doctrine/orm" />
+      <path value="$PROJECT_DIR$/webApp/vendor/doctrine/persistence" />
+      <path value="$PROJECT_DIR$/webApp/vendor/doctrine/sql-formatter" />
+      <path value="$PROJECT_DIR$/webApp/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/webApp/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/webApp/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/webApp/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/webApp/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/webApp/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/webApp/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/webApp/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/webApp/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/webApp/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/webApp/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/webApp/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/webApp/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/webApp/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/webApp/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/webApp/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/webApp/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/webApp/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/webApp/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/webApp/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/webApp/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/webApp/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/webApp/vendor/masterminds/html5" />
+      <path value="$PROJECT_DIR$/webApp/vendor/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/webApp/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/webApp/vendor/composer" />
+      <path value="$PROJECT_DIR$/webApp/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/webApp/vendor/psr/clock" />
+      <path value="$PROJECT_DIR$/webApp/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/webApp/vendor/twig/twig" />
+      <path value="$PROJECT_DIR$/webApp/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/webApp/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/webApp/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/webApp/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/webApp/vendor/psr/link" />
+      <path value="$PROJECT_DIR$/webApp/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/webApp/vendor/twig/extra-bundle" />
+      <path value="$PROJECT_DIR$/webApp/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/webApp/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/webApp/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/webApp/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/webApp/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/webApp/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/webApp/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/webApp/vendor/phpstan/phpdoc-parser" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/browser-kit" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/cache" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/cache-contracts" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/clock" />
+      <path value="$PROJECT_DIR$/webApp/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/webApp/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/asset" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/dependency-injection" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/doctrine-bridge" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/doctrine-messenger" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/config" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/css-selector" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/debug-bundle" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/expression-language" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/dom-crawler" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/dotenv" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/intl" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/flex" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/form" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/framework-bundle" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/http-client" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/monolog-bridge" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/monolog-bundle" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/notifier" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/mailer" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/maker-bundle" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/messenger" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/polyfill-php83" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/password-hasher" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/phpunit-bridge" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/polyfill-intl-icu" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/runtime" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/security-bundle" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/security-core" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/security-csrf" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/property-access" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/property-info" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/routing" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/stopwatch" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/security-http" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/serializer" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/stimulus-bundle" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/validator" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/web-link" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/twig-bridge" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/twig-bundle" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/type-info" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/ux-turbo" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/web-profiler-bundle" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/webApp/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/webApp/vendor/doctrine/data-fixtures" />
+      <path value="$PROJECT_DIR$/webApp/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/webApp/vendor/symfony/webpack-encore-bundle" />
+      <path value="$PROJECT_DIR$/webApp/vendor/fakerphp/faker" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
+  <component name="PhpStanOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/webApp/phpunit.xml.dist" custom_loader_path="$PROJECT_DIR$/webApp/vendor/autoload.php" use_configuration_file="true" />
+    </phpunit_settings>
+  </component>
+  <component name="PsalmOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+</project>
