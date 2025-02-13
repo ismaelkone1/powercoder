@@ -1,55 +1,60 @@
 <header class="w-full bg-gradient-to-r from-blue-800 via-blue-700 to-blue-900 text-white p-6 shadow-xl relative">
-    <div class="container mx-auto flex justify-between items-center">
-        <div class="flex items-center space-x-4">
-            <a href="{{ path('index') }}" class="text-3xl font-bold bg-gradient-to-r from-white via-blue-100 to-blue-200 text-transparent bg-clip-text hover:scale-105 transition-transform duration-300">
-                Service Dating
-            </a>
-            <span class="px-4 py-1.5 bg-gradient-to-r from-orange-400 to-orange-500 text-white rounded-full text-sm font-semibold shadow-md hover:from-orange-500 hover:to-orange-600 transition-all duration-300">
-                EBE
-            </span>
-        </div>
+	<div class="container mx-auto flex justify-between items-center">
+		<div class="flex items-center space-x-4">
+			<a href="{{ path('accueil') }}" class="text-3xl font-bold bg-gradient-to-r from-white via-blue-100 to-blue-200 text-transparent bg-clip-text hover:scale-105 transition-transform duration-300">
+				Service Dating
+			</a>
+			<span class="px-4 py-1.5 bg-gradient-to-r from-orange-400 to-orange-500 text-white rounded-full text-sm font-semibold shadow-md hover:from-orange-500 hover:to-orange-600 transition-all duration-300">
+				EBE
+			</span>
+		</div>
 
-        <nav class="hidden md:flex items-center space-x-8">
-            <a href="{{ path('index') }}" class="text-blue-100 hover:text-orange-400 transition-all duration-300 font-medium relative group">
-                <span>Accueil</span>
-                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-hover:w-full"></span>
-            </a>
+		<nav class="hidden md:flex items-center space-x-8">
+			<a href="{{ path('accueil') }}" class="text-blue-100 hover:text-orange-400 transition-all duration-300 font-medium relative group">
+				<span>Accueil</span>
+				<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-hover:w-full"></span>
+			</a>
 
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a href="{{ path('liste_besoin') }}" class="text-blue-100 hover:text-orange-400 transition-all duration-300 font-medium relative group">
-                    <span>Besoins</span>
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-hover:w-full"></span>
-                </a>
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('app_gestion_salaries') }}" class="text-blue-100 hover:text-orange-400 transition-all duration-300 font-medium relative group">
-                        <span>Gestion Salariés</span>
-                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-                    <a href="{{ path('app_gestion_salaries_create') }}" class="text-blue-100 hover:text-orange-400 transition-all duration-300 font-medium relative group">
-                        <span>Créer Salarié</span>
-                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-                {% endif %}
+				{% if is_granted('ROLE_ADMIN') %}
+					<a href="{{ path('admin_besoin_list') }}" class="text-blue-100 hover:text-orange-400 transition-all duration-300 font-medium relative group">
+						<span>Besoins</span>
+						<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-hover:w-full"></span>
+					</a>
+					<a href="{{ path('app_gestion_salaries') }}" class="text-blue-100 hover:text-orange-400 transition-all duration-300 font-medium relative group">
+						<span>Gestion Salariés</span>
+						<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-hover:w-full"></span>
+					</a>
+					<a href="{{ path('admin_competence_index') }}" class="text-blue-100 hover:text-orange-400 transition-all duration-300 font-medium relative group">
+						<span>Compétences</span>
+						<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-hover:w-full"></span>
+					</a>
+				{% else %}
+					<a href="{{ path('liste_besoin_id', {'id': app.user.id}) }}" class="text-blue-100 hover:text-orange-400 transition-all duration-300 font-medium relative group">
+						<span>Besoins</span>
+						<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-hover:w-full"></span>
+					</a>
+				{% endif %}
 
-                <div class="flex items-center space-x-4">
-                    <span class="text-blue-100">{{ app.user.nom }}</span>
-                    <a href="{{ path('logout') }}" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md transition-colors duration-300">
-                        Déconnexion
-                    </a>
-                </div>
-            {% else %}
-                <div class="flex items-center space-x-4">
-                    <a href="{{ path('login') }}" class="text-blue-100 hover:text-orange-400 transition-all duration-300 font-medium relative group">
-                        <span>Connexion</span>
-                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-hover:w-full"></span>
-                    </a>
-                    <a href="{{ path('register') }}" class="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-md transition-colors duration-300">
-                        Inscription
-                    </a>
-                </div>
-            {% endif %}
-        </nav>
-    </div>
-    <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 via-blue-400 to-orange-400"></div>
+				<div class="flex items-center space-x-4">
+					<span class="text-blue-100">{{ app.user.nom }}</span>
+					<a href="{{ path('logout') }}" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md transition-colors duration-300">
+						Déconnexion
+					</a>
+				</div>
+			{% else %}
+				<div class="flex items-center space-x-4">
+					<a href="{{ path('login') }}" class="text-blue-100 hover:text-orange-400 transition-all duration-300 font-medium relative group">
+						<span>Connexion</span>
+						<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-hover:w-full"></span>
+					</a>
+					<a href="{{ path('register') }}" class="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-md transition-colors duration-300">
+						Inscription
+					</a>
+				</div>
+			{% endif %}
+		</nav>
+	</div>
+	<div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 via-blue-400 to-orange-400"></div>
 </header>

@@ -31,16 +31,13 @@ final class CompetenceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $type = $competence->getType();
-            $libelle = match ($type) {
-                'BR' => 'Bricolage',
-                'JD' => 'Jardinage',
-                'MN' => 'Ménage',
-                'IF' => 'Informatique',
-                'AD' => 'Administration',
-                default => $competence->getLibelle(),
-            };
-            $competence->setLibelle($libelle);
+
+            $competences_type = $emi->getRepository(Competence::class)->findBy(['type' => $competence->getType()]);
+            if ($competences_type) {
+                $this->addFlash('danger', 'Le type de compétence existe déjà.');
+                return $this->redirectToRoute('admin_competence_new');
+            }
+            $competence->setType(strtoupper($competence->getType()));
 
             $emi->persist($competence);
             $emi->flush();
@@ -50,7 +47,7 @@ final class CompetenceController extends AbstractController
         }
 
         return $this->render('competence/new.html.twig', [
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -61,6 +58,15 @@ final class CompetenceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $competences_type = $emi->getRepository(Competence::class)->findBy(['type' => $competence->getType()]);
+
+            if ($competences_type) {
+                $this->addFlash('danger', 'Le type de compétence existe déjà.');
+                return $this->redirectToRoute('admin_competence_edit', ['id' => $competence->getId()]);
+            }
+            $competence->setType(strtoupper($competence->getType()));
+
             $emi->flush();
 
             $this->addFlash('success', 'La compétence a été modifiée avec succès.');
@@ -76,12 +82,10 @@ final class CompetenceController extends AbstractController
     #[Route('/{id}/delete', name: 'delete')]
     public function supprimerCompetence(Request $request, Competence $competence, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$competence->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($competence);
-            $entityManager->flush();
-            
-            $this->addFlash('success', 'La compétence a été supprimée avec succès.');
-        }
+        $entityManager->remove($competence);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'La compétence a été supprimée avec succès.');
 
         return $this->redirectToRoute('admin_competence_index');
     }
