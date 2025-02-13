@@ -37,7 +37,7 @@ services:
   # Service OptiApp Java
   optiapp:
     build:
-      context: ./optiApp/build
+      context: ./optiApp
     container_name: optiapp
     volumes:
       - ./optiApp:/usr/src/app
