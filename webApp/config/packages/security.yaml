@@ -23,7 +23,7 @@ security:
                 check_path: login
                 username_parameter: _username
                 password_parameter: _password
-                default_target_path: index
+                default_target_path: accueil
                 enable_csrf: true
             logout:
                 path: logout
