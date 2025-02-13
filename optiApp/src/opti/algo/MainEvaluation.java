@@ -26,7 +26,7 @@ public class MainEvaluation {
                 affectations.add(genererAffectationsAleatoires());
             }
 
-            for (int iteration = 0; iteration < 100; iteration++) {
+            for (int iteration = 0; iteration < 50; iteration++) {
                 System.out.println("Iteration " + iteration);
 
                 // Évaluation des affectations

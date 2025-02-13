@@ -16,7 +16,7 @@ public class Affectation {
         this.client = client;
     }
 
-    public void calculerScore(HashMap<Client, Double> besoinsRealisesParClient, HashSet<Salarie> salariesAffectes, HashSet<Client> clientsAvoirBesoin) {
+    public void calculerScore(HashMap<Client, Integer> besoinsRealisesParClient, HashSet<Salarie> salariesAffectes, HashSet<Client> clientsAvoirBesoin) {
         // Vérification de la compétence requise (Règle 3)
         if (!salarie.getCompetences().containsKey(besoin.getCompetencesRequises().get(0))) {
             System.out.println("Affectation invalide : " + salarie + " ne possède pas la compétence requise pour " + besoin);
@@ -27,7 +27,7 @@ public class Affectation {
         double points = salarie.getInteret(besoin.getCompetencesRequises().get(0));
 
         // Appliquer le malus dégressif pour les besoins du même client (Règle 5)
-        double besoinsRealises = besoinsRealisesParClient.getOrDefault(client, 0.0);
+        double besoinsRealises = besoinsRealisesParClient.getOrDefault(client, 0);
         if (besoinsRealises > 1) {
             points -= besoinsRealises - 1; // Applique un malus dégressif
         }
