@@ -21,7 +21,7 @@ final class BesoinController extends AbstractController
             return new Response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->render('besoin/liste_besoins.html.twig', [
+        return $this->render('besoin/liste_besoin.html.twig', [
             'controller_name' => 'BesoinController',
             'besoins' => $besoins
         ]);

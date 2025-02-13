@@ -58,6 +58,13 @@ class AuthController extends AbstractController
             'error' => $error,
         ]);
     }
+    
+    #[Route('/logout', name: 'logout', methods: ['GET'])]
+    public function logout(): void
+    {
+        // This method can be empty - it will be intercepted by the logout key on your firewall
+        throw new \Exception('Don\'t forget to activate logout in security.yaml');
+    }
 
     #[Route('/', name: 'index')]
     
