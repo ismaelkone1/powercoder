@@ -1,6 +1,6 @@
-package org.bd;
+package test.bd;
 
-import org.Besoin;
+import test.Besoin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

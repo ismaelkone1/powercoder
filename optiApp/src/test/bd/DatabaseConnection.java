@@ -1,4 +1,4 @@
-package org.bd;
+package test.bd;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
