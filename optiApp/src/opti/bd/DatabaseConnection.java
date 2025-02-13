@@ -99,6 +99,7 @@ public class DatabaseConnection {
                 rsClient.next();
                 Client client = new Client(rsClient.getInt("id"), rsClient.getString("nom"));
 
+
                 Besoin besoin = new Besoin(rs.getInt("id"), rs.getDate("date"), rs.getInt("competence_id"));
                 besoins.add(besoin);
             }
@@ -108,6 +109,7 @@ public class DatabaseConnection {
         return null;
     }
 
+    // Méthode pour récupérer
     public static HashSet<Client> getTousLesClients() {
         HashSet<Client> clients = new HashSet<>();
         try (Connection conn = connect()) {
