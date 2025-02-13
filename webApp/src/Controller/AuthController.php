@@ -1,4 +1,5 @@
 <?php
+// src/Controller/AuthController.php
 
 namespace App\Controller;
 
@@ -9,36 +10,60 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AuthController extends AbstractController
 {
-    #[Route('/register', name: 'register', methods: ['POST'])]
+    #[Route('/register', name: 'register', methods: ['GET', 'POST'])]
     public function register(
         Request $request, 
         UserPasswordHasherInterface $passwordHasher,
         EntityManagerInterface $entityManager
     ): Response {
-        $data = json_decode($request->getContent(), true);
-
         $user = new User();
-        $user->setEMail($data['mail']);
-        $user->setNom($data['nom']);
-        $user->setRoles($data['role']);
-        
-        $hashedPassword = $passwordHasher->hashPassword($user, $data['mdp']);
-        $user->setPassword($hashedPassword);
+    
+        if ($request->isMethod('POST')) {
+            // On récupère les données du formulaire
+            $data = $request->request->all();
+    
+            $user->setEMail($data['email']);
+            $user->setNom($data['nom']);
+            $user->setRoles(['ROLE_USER']); // Role par défaut
+            
+            $hashedPassword = $passwordHasher->hashPassword($user, $data['password']);
+            $user->setPassword($hashedPassword);
+    
+            // On persiste l'utilisateur dans la base de données
+            $entityManager->persist($user);
+            $entityManager->flush();
+    
+            // Redirection vers la page de login après l'inscription
+            return $this->redirectToRoute('login');
+        }
+    
+        // Si la méthode est GET, on retourne le formulaire d'inscription
+        return $this->render('security/register.twig');
+    }
+    #[Route('/login', name: 'login', methods: ['GET', 'POST'])]
+    public function login(AuthenticationUtils $authenticationUtils): Response
+    {
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
 
-        $entityManager->persist($user);
-        $entityManager->flush();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->json([
-            'message' => 'User registered successfully'
+        return $this->render('security/login.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
         ]);
     }
 
-    #[Route('/login', name: 'login', methods: ['POST'])]
-    public function login(): Response
+    #[Route('/', name: 'index')]
+    
+    public function index(): Response
     {
-        throw new \LogicException('This code should not be reached : Auth Failed');
+        return $this->render('index.html.twig');
     }
+
 }
