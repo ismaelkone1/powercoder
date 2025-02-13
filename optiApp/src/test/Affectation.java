@@ -46,4 +46,12 @@ public class Affectation {
     public double getScore() {
         return score;
     }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public Salarie getSalarie() {
+        return salarie;
+    }
 }
