@@ -45,7 +45,6 @@ public class DatabaseConnection {
                         System.out.println("Notification reçue: " + notification.getParameter());
 
                         //On lance l'évolution
-                        System.out.println("c bon");
                         ArrayList<Affectation> affectations = Evolution.lancerEvolution(10);
 
                         //On met à jour la bd
