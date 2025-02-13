@@ -1,0 +1,37 @@
+# Dockerfile for Symfony Backend 
+FROM php:8.2-fpm
+
+RUN apt-get update && apt-get install -y \
+    npm \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+# Install Postgres PDO
+RUN apt-get update && apt-get install -y libpq-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo_pgsql pgsql
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Install Symfony CLI
+RUN curl -sS https://get.symfony.com/cli/installer | bash \
+    && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
+
+# Copier composer.json et composer.lock, mais assurez-vous que le contexte soit correct
+COPY ../composer.json /var/www/html/
+WORKDIR /var/www/html
+
+# Installer les dépendances avant le montage des volumes
+RUN composer install
+RUN npm install
