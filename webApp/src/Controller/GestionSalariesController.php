@@ -34,14 +34,11 @@ final class GestionSalariesController extends AbstractController
             $form->handleRequest($request);
         
             if ($form->isSubmitted() && $form->isValid()) {
-                // Get the selected competences and interet level
                 $selectedCompetences = $form->get('selectedCompetences')->getData();
                 $interet = $form->get('interet')->getData();
         
-                // Save the salarie first
                 $entityManager->persist($salarie);
                 
-                // Create SalarieCompetence entries for each selected competence
                 foreach ($selectedCompetences as $competence) {
                     $salarieCompetence = new SalarieCompetence();
                     $salarieCompetence->setSalarie($salarie);
