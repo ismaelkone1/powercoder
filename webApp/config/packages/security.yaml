@@ -25,7 +25,7 @@ security:
             logout:
                 path: logout
                 target: /
-            anonymous: true
+            security: true
 
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }
