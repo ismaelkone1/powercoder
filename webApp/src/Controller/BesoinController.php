@@ -10,9 +10,17 @@ use App\Entity\Besoin;
 use App\Entity\User;
 use App\Form\BesoinType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 final class BesoinController extends AbstractController
 {
+    private $tokenStorage;
+
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->tokenStorage = $tokenStorage;
+    }
+
     #[Route('/admin/besoins', name: 'admin_besoin_list')]
     public function listeBesoins(EntityManagerInterface $emi): Response
     {
@@ -52,10 +60,13 @@ final class BesoinController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $user = $this->tokenStorage->getToken()->getUser();
+            $besoin->setClient($user);
+
             $entityManager->persist($besoin);
             $entityManager->flush();
 
-            return $this->redirectToRoute('create_besoin');
+            return $this->redirectToRoute('liste_besoin_id', ['id' => $user->getId()->toString()]);
         }
 
         return $this->render('besoin/create_besoin.html.twig', [
@@ -71,9 +82,11 @@ final class BesoinController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->tokenStorage->getToken()->getUser();
+
             $entityManager->flush();
 
-            return $this->redirectToRoute('edit_besoin', ['id' => $besoin->getId()]);
+            return $this->redirectToRoute('liste_besoin_id', ['id' => $user->getId()->toString()]);
         }
 
         return $this->render('besoin/edit_besoin.html.twig', [

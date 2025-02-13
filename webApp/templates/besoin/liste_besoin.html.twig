@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste besoins{% endblock %}
+{% block title %}Liste besoins
+{% endblock %}
 
 {% block body %}
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -56,9 +57,11 @@
 											{% endif %}
 										</td>
 										<td class="px-6 py-4 text-sm text-gray-500">
-											<a href="{{ path('edit_besoin', {'id': besoin.id}) }}" class="text-indigo-600 hover:text-indigo-900 mr-4">
-												Modifier
-											</a>
+											{% if is_granted('ROLE_ADMIN') or besoin.client == app.user %}
+												<a href="{{ path('edit_besoin', {'id': besoin.id}) }}" class="text-indigo-600 hover:text-indigo-900 mr-4">
+													Modifier
+												</a>
+											{% endif %}
 										</td>
 									</tr>
 								{% else %}
@@ -74,4 +77,3 @@
 		</div>
 	</div>
 {% endblock %}
-
