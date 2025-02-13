@@ -2,7 +2,7 @@ services:
   # Base de données PostgreSQL
   servicedating.db:
     image: 'postgres:latest'
-    env_file: ./webApp/cvps_db.env
+    env_file: ./webApp/ccd_db.env
     ports:
       - '5432:5432'
     volumes:
@@ -24,10 +24,9 @@ services:
     ports:
       - "8889:8000"
     command: symfony server:start --no-tls --port=8000 --allow-http --no-interaction --ansi --listen-ip=0.0.0.0
-    volumes:
-      - ./webApp/cvpsenergy.api:/var/www/html
+  
     depends_on:
       - servicedating.db
     environment:
-      - DATABASE_URL=postgresql://${POSTGRES_USER:-root}:${POSTGRES_PASSWORD:-root}@servicedating.db:5432/${POSTGRES_DB:-cvps}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-root}:${POSTGRES_PASSWORD:-root}@servicedating.db:5432/${POSTGRES_DB:-ccd}
     restart: always
