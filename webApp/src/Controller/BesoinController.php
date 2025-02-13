@@ -29,7 +29,7 @@ final class BesoinController extends AbstractController
     }
 
     #[Route('/besoins/{id}', name: 'liste_besoin_id')]
-    public function listeBesoinByClientId(EntityManagerInterface $emi, int $id): Response
+    public function listeBesoinByClientId(EntityManagerInterface $emi, string $id): Response
     {
         try {
             $besoins = $emi->getRepository(Besoin::class)->findAllBesoinsByClientId($id);
