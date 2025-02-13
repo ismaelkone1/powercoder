@@ -37,6 +37,7 @@ final class CompetenceController extends AbstractController
                 $this->addFlash('danger', 'Le type de compétence existe déjà.');
                 return $this->redirectToRoute('admin_competence_new');
             }
+            $competence->setType(strtoupper($competence->getType()));
 
             $emi->persist($competence);
             $emi->flush();
@@ -64,6 +65,8 @@ final class CompetenceController extends AbstractController
                 $this->addFlash('danger', 'Le type de compétence existe déjà.');
                 return $this->redirectToRoute('admin_competence_edit', ['id' => $competence->getId()]);
             }
+            $competence->setType(strtoupper($competence->getType()));
+
             $emi->flush();
 
             $this->addFlash('success', 'La compétence a été modifiée avec succès.');
