@@ -1,6 +1,6 @@
-package test.algo;
+package opti.algo;
 
-import test.Affectation;
+import opti.Affectation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

@@ -1,8 +1,8 @@
-package test.algo;
+package opti.algo;
 
-import test.Affectation;
-import test.Client;
-import test.Salarie;
+import opti.Affectation;
+import opti.Client;
+import opti.Salarie;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,6 +1,6 @@
-package test.bd;
+package opti.bd;
 
-import test.Besoin;
+import opti.Besoin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

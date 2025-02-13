@@ -1,4 +1,4 @@
-package test;
+package opti;
 
 public class Competence {
     private String type;
