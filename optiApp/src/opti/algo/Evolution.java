@@ -70,10 +70,10 @@ public class Evolution {
         return new HashSet<>();
     }
 
-    public ArrayList<ArrayList<Affectation>> evoluer(HashMap<ArrayList<Affectation>, Integer> affectationsMap) {
+    public ArrayList<ArrayList<Affectation>> evoluer(HashMap<ArrayList<Affectation>, Double> affectationsMap) {
         // Trier les affectations par score décroissant
-        ArrayList<HashMap.Entry<ArrayList<Affectation>, Integer>> affectationsTriee = new ArrayList<>(affectationsMap.entrySet());
-        affectationsTriee.sort((s1, s2) -> Integer.compare(s2.getValue(), s1.getValue()));
+        ArrayList<HashMap.Entry<ArrayList<Affectation>, Double>> affectationsTriee = new ArrayList<>(affectationsMap.entrySet());
+        affectationsTriee.sort((s1, s2) -> Double.compare(s2.getValue(), s1.getValue()));
 
         System.out.println("Meilleure solution : " + affectationsTriee.get(0).getKey());
 

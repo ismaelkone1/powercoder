@@ -24,4 +24,22 @@ public class Salarie {
     public HashMap<Competence, Integer> getCompetences() {
         return competences;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+
 }

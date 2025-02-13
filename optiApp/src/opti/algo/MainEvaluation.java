@@ -26,13 +26,13 @@ public class MainEvaluation {
                 System.out.println("Iteration " + iteration);
 
                 // Évaluation des affectations
-                HashMap<ArrayList<Affectation>, Integer> stats = new HashMap<>();
+                HashMap<ArrayList<Affectation>, Double> stats = new HashMap<>();
                 for (ArrayList<Affectation> affectation : affectations) {
-                    stats.put(affectation, 0);
+                    stats.put(affectation, 0.0);
                 }
 
                 Evolution evolution = new Evolution();
-                stats = evolution.evoluer(stats);
+                //stats = evolution.evoluer(stats);
                 affectations = evolution.evoluer(stats);
 
                 // Log des stats
