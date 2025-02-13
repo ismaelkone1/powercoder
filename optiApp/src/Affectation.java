@@ -5,9 +5,9 @@ class Affectation {
     private Salarie salarie;
     private Client client;
     private Besoin besoin;
-    private int score;
+    private double score;
 
-    public Affectation(Salarie salarie, Besoin besoin, int score, Client client) {
+    public Affectation(Salarie salarie, Besoin besoin, double score) {
         this.salarie = salarie;
         this.besoin = besoin;
         this.score = score;
@@ -41,7 +41,7 @@ class Affectation {
     }
 
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
@@ -61,4 +61,3 @@ class Affectation {
         return  salarie + " affecté au besoin " + besoin + " avec un score de " + score;
     }
 }
-
