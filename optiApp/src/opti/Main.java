@@ -1,4 +1,4 @@
-package test;
+package opti;
 
 public class Main {
     public static void main(String[] args) {
