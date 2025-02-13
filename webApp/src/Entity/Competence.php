@@ -31,7 +31,7 @@ class Competence
     /**
      * @var Collection<int, SalarieCompetence>
      */
-    #[ORM\OneToMany(targetEntity: SalarieCompetence::class, mappedBy: 'competence')]
+    #[ORM\OneToMany(targetEntity: SalarieCompetence::class, mappedBy: 'competence', cascade: ['remove'], orphanRemoval: true)]
     private Collection $salarieCompetences;
 
     public function __construct()
