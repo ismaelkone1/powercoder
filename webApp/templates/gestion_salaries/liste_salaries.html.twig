@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste salaries{% endblock %}
+
+{% block body %}
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="sm:flex sm:items-center">
+            <div class="sm:flex-auto">
+                <h1 class="text-2xl font-semibold text-gray-900">Affichage de la liste des salariés</h1>
+                <p class="mt-2 text-sm text-gray-700">Présentation des salariés existants avec leurs caractéristiques
+                    (nom, compétences réalisables, notes d’intérêt correspondantes).</p>
+            </div>
+        </div>
+
+        <div class="mt-8 flex flex-col">
+            <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full pyCompétences-2 align-middle md:px-6 lg:px-8">
+                    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-300">
+                            <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Nom</th>
+                                <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+                                    Compétences (note d'intérêt)
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 bg-white">
+                            {% for salarie in salaries %}
+                                <tr>
+                                    <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900">{{ salarie.nom }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        {% for competence in salarie.salarieCompetences %}
+                                            {% set badgeColor = 'bg-green-100 text-green-800' %}
+                                            {% if competence.interet <= 3 %}
+                                                {% set badgeColor = 'bg-red-100 text-red-800' %}
+                                            {% elseif competence.interet <= 6 %}
+                                                {% set badgeColor = 'bg-yellow-100 text-yellow-800' %}
+                                            {% endif %}
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ badgeColor }} mr-2">
+                                                {{ competence.competence.libelle }}({{ competence.competence.type }}) ({{ competence.interet }})
+                                            </span>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="2" class="px-6 py-4 text-sm text-gray-500 text-center">Aucun salarie trouvé</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

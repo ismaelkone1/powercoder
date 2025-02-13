@@ -60,7 +60,8 @@ class AppFixtures extends Fixture
         }
 
         foreach ($salaries as $salarie) {
-            foreach ($competences as $competence) {
+            $randomCompetences = $faker->randomElements($competences, mt_rand(1, 3));
+            foreach ($randomCompetences as $competence) {
                 $salarieCompetence = new SalarieCompetence();
                 $salarieCompetence->setSalarie($salarie);
                 $salarieCompetence->setCompetence($competence);
