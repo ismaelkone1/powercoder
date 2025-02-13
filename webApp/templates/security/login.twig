@@ -17,6 +17,12 @@
 				<div>
 					<button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-200">Login</button>
 				</div>
+				<div class="text-center mt-4">
+                    <span class="text-sm text-gray-600">Pas encore de compte ?</span>
+                    <a href="{{ path('register') }}" class="text-blue-500 hover:text-blue-700 text-sm font-medium ml-1">
+                        Inscrivez-vous
+                    </a>
+                </div>
 				{% if error %}
 					<div class="rounded-md bg-red-50 p-4 mt-4">
 						<div class="flex">
