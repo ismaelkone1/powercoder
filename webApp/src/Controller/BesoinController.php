@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class BesoinController extends AbstractController
 {
-    #[Route('/besoins', name: 'liste_besoin', methods: ['GET'])]
+    #[Route('/besoins', name: 'liste_besoin')]
     public function listeBesoins(EntityManagerInterface $emi): Response
     {
         try {
@@ -27,7 +27,7 @@ final class BesoinController extends AbstractController
         ]);
     }
 
-    #[Route('/besoin/{id}', name: 'liste_besoin_id', methods: ['GET'])]
+    #[Route('/besoins/{id}', name: 'liste_besoin_id')]
     public function listeBesoinByClientId(EntityManagerInterface $emi, int $id): Response
     {
         try {
@@ -42,7 +42,7 @@ final class BesoinController extends AbstractController
         ]);
     }
 
-    #[Route('/besoin/create', name: 'create_besoin', methods: ['GET'])]
+    #[Route('/besoin/create', name: 'create_besoin')]
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         $besoin = new Besoin();
