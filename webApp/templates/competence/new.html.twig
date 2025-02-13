@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ competence is defined ? 'Modifier' : 'Nouvelle' }}
+	compétence
+{% endblock %}
+
+{% block body %}
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+		<div class="md:grid md:grid-cols-3 md:gap-6">
+			<div class="md:col-span-1">
+				<h3 class="text-lg font-medium leading-6 text-gray-900">{{ competence is defined ? 'Modifier' : 'Nouvelle' }}
+					compétence</h3>
+				<p class="mt-1 text-sm text-gray-600">
+					{% if competence is defined %}
+						Modifiez les informations de la compétence.
+					{% else %}
+						Créez une nouvelle compétence en remplissant le formulaire.
+					{% endif %}
+				</p>
+			</div>
+			<div class="mt-5 md:col-span-2 md:mt-0">
+				{{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+				<div class="shadow sm:overflow-hidden sm:rounded-md">
+					<div class="space-y-6 bg-white px-4 py-5 sm:p-6">
+						{{ form_row(form.type, {
+        					'label': 'Type de compétence',
+        					'attr': {
+            					'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+        					}
+    					}) }}
+						<p class="mt-2 text-sm text-gray-500">
+							Types disponibles :
+							<span class="font-medium">BR</span>
+							(Bricolage),
+							<span class="font-medium">JD</span>
+							(Jardinage),
+							<span class="font-medium">MN</span>
+							(Ménage),
+							<span class="font-medium">IF</span>
+							(Informatique),
+							<span class="font-medium">AD</span>
+							(Administration)
+						</p>
+					</div>
+					<div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+						<button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+							{{ competence is defined ? 'Modifier' : 'Créer' }}
+						</button>
+					</div>
+				</div>
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
