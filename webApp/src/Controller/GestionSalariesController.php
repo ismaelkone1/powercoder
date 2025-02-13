@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\SalarieCompetence;
 use App\Entity\Salarie;
 use App\Form\SalarieType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,32 +32,32 @@ final class GestionSalariesController extends AbstractController
             $salarie = new Salarie();
             $form = $this->createForm(SalarieType::class, $salarie);
             $form->handleRequest($request);
-    
+        
             if ($form->isSubmitted() && $form->isValid()) {
                 // Get the selected competences and interet level
-                $competences = $form->get('competences')->getData();
+                $selectedCompetences = $form->get('selectedCompetences')->getData();
                 $interet = $form->get('interet')->getData();
-    
+        
                 // Save the salarie first
                 $entityManager->persist($salarie);
                 
                 // Create SalarieCompetence entries for each selected competence
-                foreach ($competences as $competence) {
+                foreach ($selectedCompetences as $competence) {
                     $salarieCompetence = new SalarieCompetence();
                     $salarieCompetence->setSalarie($salarie);
                     $salarieCompetence->setCompetence($competence);
                     $salarieCompetence->setInteret($interet);
                     $entityManager->persist($salarieCompetence);
                 }
-    
+        
                 $entityManager->flush();
-    
+        
                 $this->addFlash('success', 'Salarié créé avec succès');
                 return $this->redirectToRoute('app_gestion_salaries');
             }
-    
+        
             return $this->render('gestion_salaries/create_salarie.html.twig', [
                 'form' => $form->createView(),
             ]);
-        }
+        }       
 }
