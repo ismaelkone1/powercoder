@@ -1,4 +1,4 @@
-package java;
+package org;
 
 public class Competence {
     private String type;

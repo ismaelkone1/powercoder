@@ -1,15 +1,17 @@
-class Affectation {
+package org;
+
+public class Affectation {
     private Salarie salarie;
     private Besoin besoin;
-    private int score;
+    private double score;
 
-    public Affectation(Salarie salarie, Besoin besoin, int score) {
+    public Affectation(Salarie salarie, Besoin besoin, double score) {
         this.salarie = salarie;
         this.besoin = besoin;
         this.score = score;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 }

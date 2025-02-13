@@ -1,3 +1,6 @@
+import org.Affectation;
+import org.Client;
+import org.Salarie;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,15 +32,15 @@ public class EvaluateurAffectation {
 
         for (Affectation affectation : affectations) {
             // Calculer le score de l'affectation
-            int points = affectation.calculerScore(besoinsRealisesParClient, salariesAffectes, clientsAvoirBesoin);
+            //int points = affectation.calculerScore(besoinsRealisesParClient, salariesAffectes, clientsAvoirBesoin);
 
             // Ajouter le score de l'affectation au score total
-            scoreTotal += points;
+            //scoreTotal += points;
 
             // Comptabiliser le besoin réalisé pour ce client
-            Client client = affectation.getClient();
-            int besoinsRealises = besoinsRealisesParClient.getOrDefault(client, 0);
-            besoinsRealisesParClient.put(client, besoinsRealises + 1);
+            //Client client = affectation.getClient();
+            //int besoinsRealises = besoinsRealisesParClient.getOrDefault(client, 0);
+            //besoinsRealisesParClient.put(client, besoinsRealises + 1);
         }
 
         // Appliquer les malus pour les clients sans besoin affecté (Règle 6)

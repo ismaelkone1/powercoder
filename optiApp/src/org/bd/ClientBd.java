@@ -1,20 +1,11 @@
-package java.bd;
+package org.bd;
 
-import java.Besoin;
-import java.Client;
-import java.Competence;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import org.Besoin;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class ClientBd {
 
@@ -39,7 +30,7 @@ public class ClientBd {
     }
 
     public Besoin getBesoin(int id) {
-        //TODO faire les méthodes de requete a la bd (impossible a faire avant que la bd soit op)
+        //TODO faire les méthodes de requete a la java.java.bd (impossible a faire avant que la java.java.bd soit op)
         String query = "SELECT nom, email FROM user";
 
         try (Connection conn = DatabaseConnection.connect();

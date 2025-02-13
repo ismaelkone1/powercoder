@@ -1,6 +1,8 @@
+package org;
+
 import java.util.ArrayList;
 
-class Client {
+public class Client {
     private int id;
     private String nom;
     private ArrayList<Besoin> besoins;

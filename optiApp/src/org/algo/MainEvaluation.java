@@ -1,6 +1,6 @@
-package java.algo;
+package org.algo;
 
-import java.Affectation;
+import org.Affectation;
 import java.util.ArrayList;
 import java.util.List;
 

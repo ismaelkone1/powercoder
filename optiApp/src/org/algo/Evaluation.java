@@ -1,4 +1,4 @@
-package java.algo;
+package org.algo;
 
 public class Evaluation {
 
