@@ -7,13 +7,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Besoin;
+use App\Entity\User;
 use App\Form\BesoinType;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 
 final class BesoinController extends AbstractController
 {
-    #[Route('/besoins', name: 'liste_besoin')]
+    #[Route('/admin/besoins', name: 'admin_besoin_list')]
     public function listeBesoins(EntityManagerInterface $emi): Response
     {
         try {
@@ -28,7 +28,7 @@ final class BesoinController extends AbstractController
         ]);
     }
 
-    #[Route('/besoins/{id}', name: 'liste_besoin_id')]
+    #[Route('/user/{id}/besoins', name: 'liste_besoin_id')]
     public function listeBesoinByClientId(EntityManagerInterface $emi, string $id): Response
     {
         try {

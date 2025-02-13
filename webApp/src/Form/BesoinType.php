@@ -21,10 +21,6 @@ class BesoinType extends AbstractType
             ->add('date', null, [
                 'widget' => 'single_text',
             ])
-            ->add('client', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'nom',
-            ])
             ->add('competences', EntityType::class, [
                 'class' => Competence::class,
                 'choice_label' => 'libelle',
