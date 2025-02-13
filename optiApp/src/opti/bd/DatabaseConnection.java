@@ -1,13 +1,12 @@
 package opti.bd;
 
-import opti.Besoin;
-import opti.Client;
-import opti.Competence;
-import opti.Salarie;
+import opti.*;
 import opti.Client;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import opti.algo.Evolution;
 import org.postgresql.PGNotification;
 import org.postgresql.PGConnection;
 
@@ -25,12 +24,24 @@ public class DatabaseConnection {
             if (conn != null) {
                 System.out.println("Connexion réussie à la bd !");
             }
-            System.out.println(getTousLesBesoins());
+
+            ArrayList<Affectation> affectations = Evolution.lancerEvolution(10);
+
+            //On met à jour la bd
+            for (Affectation affectation : affectations) {
+                String query = "INSERT INTO salarie_besoin (salarie_id, besoin_id) VALUES (?, ?)";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ps.setInt(1, affectation.getSalarie().getId());
+                ps.setInt(2, affectation.getBesoin().getId());
+                ps.executeUpdate();
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        /*
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+
             // Activer l'écoute du canal de notification
             Statement stmt = conn.createStatement();
             stmt.execute("LISTEN new_besoin_channel;");
@@ -45,10 +56,24 @@ public class DatabaseConnection {
                     for (PGNotification notification : notifications) {
                         System.out.println("Notification reçue: " + notification.getParameter());
 
+                        //On lance l'évolution
+                        System.out.println("c bon");
+                        ArrayList<Affectation> affectations = Evolution.lancerEvolution(10);
+
+                        //On met à jour la bd
+                        for (Affectation affectation : affectations) {
+                            String query = "INSERT INTO salarie_besoin (salarie_id, besoin_id) VALUES (?, ?)";
+                            PreparedStatement ps = conn.prepareStatement(query);
+                            ps.setInt(1, affectation.getSalarie().getId());
+                            ps.setInt(2, affectation.getBesoin().getId());
+                            ps.executeUpdate();
+                        }
+
                         // Vous pouvez maintenant traiter les données JSON envoyées par la procédure stockée
                         String json = notification.getParameter();
                         // Utiliser une bibliothèque JSON pour traiter le message
                         System.out.println("Détails du besoin : " + json);
+
                     }
                 }
                 Thread.sleep(1000); // Attendre un peu avant la prochaine vérification des notifications
@@ -56,6 +81,8 @@ public class DatabaseConnection {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+         */
     }
 
     //méthode pour récupérer les salariés
