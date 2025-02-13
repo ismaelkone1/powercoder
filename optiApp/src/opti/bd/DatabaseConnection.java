@@ -1,12 +1,12 @@
 package opti.bd;
 
-import opti.Besoin;
-import opti.Client;
-import opti.Competence;
-import opti.Salarie;
+import opti.*;
 import opti.Client;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+
+import opti.algo.Evolution;
 import org.postgresql.PGNotification;
 import org.postgresql.PGConnection;
 
@@ -44,10 +44,23 @@ public class DatabaseConnection {
                     for (PGNotification notification : notifications) {
                         System.out.println("Notification reçue: " + notification.getParameter());
 
+                        //On lance l'évolution
+                        System.out.println("c bon");
+                        ArrayList<Affectation> affectations = Evolution.lancerEvolution(10);
+
+                        //On met à jour la bd
+                        for (Affectation affectation : affectations) {
+                            String query = "INSERT INTO salarie_besoin (salarie_id, besoin_id) VALUES (?, ?)";
+                            PreparedStatement ps = conn.prepareStatement(query);
+                            ps.setInt(1, affectation.getSalarie().getId());
+                            ps.setInt(2, affectation.getBesoin().getId());
+                            ps.executeUpdate();
+                        }
+
                         // Vous pouvez maintenant traiter les données JSON envoyées par la procédure stockée
                         String json = notification.getParameter();
                         // Utiliser une bibliothèque JSON pour traiter le message
-                        //System.out.println("Détails du besoin : " + json);
+                        System.out.println("Détails du besoin : " + json);
                     }
                 }
                 Thread.sleep(1000); // Attendre un peu avant la prochaine vérification des notifications
@@ -156,8 +169,10 @@ public class DatabaseConnection {
                     }
                 }).findFirst().orElse(null);
 
+                ArrayList<Competence> competencesRequises = new ArrayList<>();
+                competencesRequises.add(competence);
 
-                Besoin besoin = new Besoin(rs.getInt("id"), rs.getDate("date"), competence.getType(), client);
+                Besoin besoin = new Besoin(rs.getInt("id"), rs.getDate("date"), competence.getType(), competencesRequises);
                 besoins.add(besoin);
             }
         } catch (SQLException e) {

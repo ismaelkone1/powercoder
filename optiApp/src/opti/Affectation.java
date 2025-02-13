@@ -17,10 +17,32 @@ public class Affectation {
     }
 
     public void calculerScore(HashMap<Client, Integer> besoinsRealisesParClient, HashSet<Salarie> salariesAffectes, HashSet<Client> clientsAvoirBesoin) {
+        System.out.println("Salarié : "+this.salarie);
+        System.out.println("Besoin : "+this.besoin);
+        System.out.println("Détails du besoin : "+this.besoin.getCompetencesRequises());
+
+        System.out.println("Client : "+this.client);
+
         // Vérification de la compétence requise (Règle 3)
-        if (!salarie.getCompetences().containsKey(besoin.getCompetencesRequises().get(0))) {
-            System.out.println("Affectation invalide : " + salarie + " ne possède pas la compétence requise pour " + besoin);
-            return;
+        //Affichage des compétences du salarié
+        System.out.println("Compétences du salarié BITCH: ");
+        for (Competence competence : this.salarie.getCompetences().keySet()) {
+            System.out.println("Compétence : "+competence.getType()+" Intérêt : "+this.salarie.getInteret(competence));
+        }
+
+        //Affichage des compétences requises pour le besoin
+        System.out.println("Compétences requises pour le besoin : ");
+        for (Competence competence : this.besoin.getCompetencesRequises()) {
+            System.out.println("Compétence requise : "+competence.getType());
+        }
+
+        //parcours toutes les compétences requises pour le besoin
+        for (Competence competence : this.besoin.getCompetencesRequises()) {
+            if (!this.salarie.getCompetences().containsKey(competence)) {
+                System.out.println("Affectation invalide : " + this.salarie + " ne possède pas la compétence requise pour " + this.besoin);
+                this.score = 0;
+                return;
+            }
         }
 
         // Ajout du score basé sur l'intérêt du salarié (Règle 4)
@@ -54,5 +76,9 @@ public class Affectation {
 
     public Salarie getSalarie() {
         return salarie;
+    }
+
+    public Besoin getBesoin() {
+        return besoin;
     }
 }

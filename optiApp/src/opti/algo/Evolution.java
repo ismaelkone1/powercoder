@@ -1,8 +1,10 @@
 package opti.algo;
 
 import opti.Affectation;
+import opti.Besoin;
 import opti.Client;
 import opti.Salarie;
+import opti.bd.DatabaseConnection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,8 +12,10 @@ import java.util.HashSet;
 import java.util.Random;
 
 public class Evolution {
+    //La liste des meilleures affectations
+    private ArrayList<ArrayList<Affectation>> meilleuresAffectations = new ArrayList<>();
 
-    public static HashMap<ArrayList<Affectation>, Double> evaluerAffectations(HashMap<ArrayList<Affectation>, Integer> affectationsMap) {
+    public static HashMap<ArrayList<Affectation>, Double> evaluerAffectations(HashMap<ArrayList<Affectation>, Double> affectationsMap) {
         HashMap<ArrayList<Affectation>, Double> scoresMap = new HashMap<>();
 
         for (ArrayList<Affectation> affectations : affectationsMap.keySet()) {
@@ -82,9 +86,9 @@ public class Evolution {
         // Sélectionner la moitié des meilleures affectations
         int taille = affectationsTriee.size();
         int moitie = taille / 2;
-        ArrayList<ArrayList<Affectation>> meilleures = new ArrayList<>();
+
         for (int i = 0; i < moitie; i++) {
-            meilleures.add(affectationsTriee.get(i).getKey());
+            meilleuresAffectations.add(affectationsTriee.get(i).getKey());
         }
 
         // Générer de nouvelles affectations via croisement
@@ -92,8 +96,8 @@ public class Evolution {
         Random random = new Random();
         for (int i = 0; i < taille - moitie; i++) {
             // Sélectionner deux parents aléatoires parmi les meilleurs
-            ArrayList<Affectation> parent1 = meilleures.get(random.nextInt(meilleures.size()));
-            ArrayList<Affectation> parent2 = meilleures.get(random.nextInt(meilleures.size()));
+            ArrayList<Affectation> parent1 = meilleuresAffectations.get(random.nextInt(meilleuresAffectations.size()));
+            ArrayList<Affectation> parent2 = meilleuresAffectations.get(random.nextInt(meilleuresAffectations.size()));
 
             // Créer un enfant en croisant les parents
             ArrayList<Affectation> enfant = croiserAffectations(parent1, parent2);
@@ -102,7 +106,7 @@ public class Evolution {
 
         // Combiner les meilleures affectations et les nouvelles affectations
         ArrayList<ArrayList<Affectation>> nouvellePopulation = new ArrayList<>();
-        nouvellePopulation.addAll(meilleures);
+        nouvellePopulation.addAll(meilleuresAffectations);
         nouvellePopulation.addAll(enfants);
 
         return nouvellePopulation;
@@ -117,7 +121,7 @@ public class Evolution {
                     parent1.get(random.nextInt(parent1.size())),
                     parent2.get(random.nextInt(parent2.size()))
             );
-            while (enfant.contains(affectation)) {
+            while (enfant.contains(affectation) && meilleuresAffectations.contains(affectation)) {
                 affectation = randomChoice(
                         parent1.get(random.nextInt(parent1.size())),
                         parent2.get(random.nextInt(parent2.size()))
@@ -133,6 +137,67 @@ public class Evolution {
      */
     private <T> T randomChoice(T option1, T option2) {
         return new Random().nextBoolean() ? option1 : option2;
+    }
+
+    private static ArrayList<Affectation> genererAffectationsAleatoires() {
+        ArrayList<Affectation> affectations = new ArrayList<>();
+
+        //On récupère les salariés
+        HashSet<Salarie> salaries = DatabaseConnection.getTousLesSalaries();
+        //On récupère les besoins
+        HashSet<Besoin> besoins = DatabaseConnection.getTousLesBesoins();
+        //ON récupère les clients
+        HashSet<Client> clients = DatabaseConnection.getTousLesClients();
+
+        //On génère les affectations en fonction du nombre de besoins
+        for (int i = 0; i < besoins.size(); i++) {
+            Salarie salarie = (Salarie) salaries.toArray()[(int) (Math.random() * salaries.size())];
+            Besoin besoin = (Besoin) besoins.toArray()[(int) (Math.random() * besoins.size())];
+            Client client = (Client) clients.toArray()[(int) (Math.random() * clients.size())];
+
+            Affectation affectation = new Affectation(salarie, besoin, 0, client);
+            affectations.add(affectation);
+        }
+
+        return affectations;
+    }
+
+    public static ArrayList<Affectation> lancerEvolution(int iterations) {
+        // Initialisation avec une liste d'affectations
+        ArrayList<ArrayList<Affectation>> affectations = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            ArrayList<Affectation> affectation = genererAffectationsAleatoires();
+            //On ajoute l'affectation à la liste si elle n'est pas déjà présente
+            while (affectations.contains(affectation)) {
+                affectation = genererAffectationsAleatoires();
+            }
+            affectations.add(affectation);
+            //affectations.add(genererAffectationsAleatoires());
+        }
+
+        Evolution evolution = new Evolution();
+
+        for (int iteration = 0; iteration < iterations; iteration++) {
+            System.out.println("Iteration " + iteration);
+
+            // Évaluation des affectations
+            HashMap<ArrayList<Affectation>, Double> stats = new HashMap<>();
+            for (ArrayList<Affectation> affectation : affectations) {
+                stats.put(affectation, 0.0);
+            }
+            stats = evolution.evaluerAffectations(stats);
+
+            // Affichage des scores
+            for (ArrayList<Affectation> affectation : stats.keySet()) {
+                System.out.println("Affectation : " + affectation + " Score : " + stats.get(affectation));
+            }
+
+            // Appliquer l'évolution
+            affectations = evolution.evoluer(stats);
+        }
+
+        // Retourner la meilleure affectation trouvée
+        return affectations.get(0);
     }
 }
 
