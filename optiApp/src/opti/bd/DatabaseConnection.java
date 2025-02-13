@@ -24,29 +24,17 @@ public class DatabaseConnection {
             if (conn != null) {
                 System.out.println("Connexion réussie à la bd !");
             }
-
-            ArrayList<Affectation> affectations = Evolution.lancerEvolution(10);
-
-            //On met à jour la bd
-            for (Affectation affectation : affectations) {
-                String query = "INSERT INTO salarie_besoin (salarie_id, besoin_id) VALUES (?, ?)";
-                PreparedStatement ps = conn.prepareStatement(query);
-                ps.setInt(1, affectation.getSalarie().getId());
-                ps.setInt(2, affectation.getBesoin().getId());
-                ps.executeUpdate();
-            }
-
+            System.out.println(getTousLesBesoins());
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        /*
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
 
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             // Activer l'écoute du canal de notification
             Statement stmt = conn.createStatement();
-            stmt.execute("LISTEN new_besoin_channel;");
+            stmt.execute("LISTEN new_competence_besoin_channel;");
 
-            System.out.println("En attente de notifications sur le canal 'new_besoin_channel'...");
+            System.out.println("En attente de notifications sur le canal 'new_competence_besoin_channel'...");
 
             // Boucle pour écouter les notifications
             while (true) {
@@ -73,7 +61,6 @@ public class DatabaseConnection {
                         String json = notification.getParameter();
                         // Utiliser une bibliothèque JSON pour traiter le message
                         System.out.println("Détails du besoin : " + json);
-
                     }
                 }
                 Thread.sleep(1000); // Attendre un peu avant la prochaine vérification des notifications
@@ -81,8 +68,6 @@ public class DatabaseConnection {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-         */
     }
 
     //méthode pour récupérer les salariés
