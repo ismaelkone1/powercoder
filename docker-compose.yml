@@ -2,29 +2,31 @@ services:
   # Base de données PostgreSQL
   servicedating.db:
     image: 'postgres:latest'
+<<<<<<< HEAD:webApp/docker-compose.yml
     env_file: ./webApp/ccd_db.env
+=======
+    env_file: ./webApp/back.env
+>>>>>>> 7ee9c432ffcf21252475207276e53949cff3fa27:docker-compose.yml
     ports:
       - '5432:5432'
     volumes:
       - ./webApp/app/sql:/var/sql
     restart: always
 
-  # Service Administration des bases SQL (Adminer)
-  adminer:
-    image: 'adminer:latest'
-    ports:
-      - '8080:8080'
 
   # Backend Symfony API
   servicedating.backend:
     build:
-      context: ./webApp
-      dockerfile: ./webApp/build/DockerFile.backend
+      context: ./
+      dockerfile: ./webApp/build/Dockerfile.backend
     container_name: servicedating-backend
     ports:
       - "8889:8000"
     command: symfony server:start --no-tls --port=8000 --allow-http --no-interaction --ansi --listen-ip=0.0.0.0
+<<<<<<< HEAD:webApp/docker-compose.yml
   
+=======
+>>>>>>> 7ee9c432ffcf21252475207276e53949cff3fa27:docker-compose.yml
     depends_on:
       - servicedating.db
     environment:
