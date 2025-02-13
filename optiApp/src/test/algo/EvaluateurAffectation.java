@@ -1,6 +1,9 @@
-import org.Affectation;
-import org.Client;
-import org.Salarie;
+package test.algo;
+
+import test.Affectation;
+import test.Client;
+import test.Salarie;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
