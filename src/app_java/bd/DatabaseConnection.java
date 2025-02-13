@@ -1,4 +1,4 @@
-package bd;
+package app_java.bd;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,7 +16,7 @@ public class DatabaseConnection {
     public static void main(String[] args) {
         try (Connection conn = connect()) {
             if (conn != null) {
-                System.out.println("Connexion réussie à la bd !");
+                System.out.println("Connexion réussie à la app_java.bd !");
             }
         } catch (SQLException e) {
             e.printStackTrace();

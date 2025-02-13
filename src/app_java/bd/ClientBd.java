@@ -1,4 +1,4 @@
-package bd;
+package app_java.bd;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
