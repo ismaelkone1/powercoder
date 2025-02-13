@@ -2,6 +2,15 @@
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+*/*.iml/
+*/.idea/
+*/*.mvn/
+*/mvnw.cmd/
+*/pom.xml/
+*/.gitignore
+*/mvn
+*/target/*
+*/*.log/
 
 ### Eclipse ###
 .apt_generated
@@ -27,3 +36,8 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Images ###
+*.jpg
+*/img/
+*.iml
