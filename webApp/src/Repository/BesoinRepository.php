@@ -42,7 +42,7 @@ class BesoinRepository extends ServiceEntityRepository
     //    }
 
     public function findAllBesoins(): array
-    {   
+    {
         return $this->getEntityManager()->getRepository(Besoin::class)
             ->createQueryBuilder('b')
             ->leftJoin('b.competences', 'c')
@@ -60,7 +60,7 @@ class BesoinRepository extends ServiceEntityRepository
             ->leftJoin('b.competences', 'c')
             ->leftJoin('b.salaries', 's')
             ->addSelect('c', 's')
-            ->where('b.client_id = :id')
+            ->where('b.client = :id')
             ->setParameter('id', $id)
             ->orderBy('b.date', 'DESC')
             ->getQuery()

@@ -6,8 +6,14 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+
+use Ramsey\Uuid\Doctrine\UuidGenerator;
+use Ramsey\Uuid\UuidInterface;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -15,9 +21,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: "uuid", unique: true)]
+    #[ORM\GeneratedValue(strategy: "CUSTOM")]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    protected UuidInterface $id;
 
     #[ORM\Column(length: 180)]
     private ?string $email = null;
@@ -40,7 +47,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Besoin>
      */
-    #[ORM\OneToMany(targetEntity: Besoin::class, mappedBy: 'client_id', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Besoin::class, mappedBy: 'client', orphanRemoval: true)]
     private Collection $besoins;
 
     public function __construct()
@@ -48,7 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->besoins = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): UuidInterface
     {
         return $this->id;
     }
@@ -147,7 +154,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->besoins->contains($besoin)) {
             $this->besoins->add($besoin);
-            $besoin->setClientId($this);
+            $besoin->setClient($this);
         }
 
         return $this;
@@ -157,8 +164,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->besoins->removeElement($besoin)) {
             // set the owning side to null (unless already changed)
-            if ($besoin->getClientId() === $this) {
-                $besoin->setClientId(null);
+            if ($besoin->getClient() === $this) {
+                $besoin->setClient(null);
             }
         }
 

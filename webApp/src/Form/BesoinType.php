@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class BesoinType extends AbstractType
 {
@@ -20,19 +21,20 @@ class BesoinType extends AbstractType
             ->add('date', null, [
                 'widget' => 'single_text',
             ])
-            ->add('client_id', EntityType::class, [
+            ->add('client', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id',
-            ])
-            ->add('salaries', EntityType::class, [
-                'class' => Salarie::class,
-                'choice_label' => 'id',
-                'multiple' => true,
+                'choice_label' => 'nom',
             ])
             ->add('competences', EntityType::class, [
                 'class' => Competence::class,
-                'choice_label' => 'id',
+                'choice_label' => 'type',
                 'multiple' => true,
+                'expanded' => false,
+                'by_reference' => false,
+            ])
+            ->add('save', SubmitType::class, [
+                'attr' => ['class' => 'btn btn-primary'],
+                'label' => 'Enregistrer'
             ])
         ;
     }
