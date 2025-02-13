@@ -33,6 +33,6 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash \
 COPY webApp/composer.json /var/www/html/
 WORKDIR /var/www/html
 
-# Installer les dépendances avant le montage des volumes
-RUN composer install
+# Installer les dépendances sans exécuter les scripts auto
+RUN composer install --no-scripts
 RUN npm install
