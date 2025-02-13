@@ -32,9 +32,9 @@ public class DatabaseConnection {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             // Activer l'écoute du canal de notification
             Statement stmt = conn.createStatement();
-            stmt.execute("LISTEN new_besoin_channel;");
+            stmt.execute("LISTEN new_competence_besoin_channel;");
 
-            System.out.println("En attente de notifications sur le canal 'new_besoin_channel'...");
+            System.out.println("En attente de notifications sur le canal 'new_competence_besoin_channel'...");
 
             // Boucle pour écouter les notifications
             while (true) {
@@ -47,7 +47,7 @@ public class DatabaseConnection {
                         // Vous pouvez maintenant traiter les données JSON envoyées par la procédure stockée
                         String json = notification.getParameter();
                         // Utiliser une bibliothèque JSON pour traiter le message
-                        System.out.println("Détails du besoin : " + json);
+                        //System.out.println("Détails du besoin : " + json);
                     }
                 }
                 Thread.sleep(1000); // Attendre un peu avant la prochaine vérification des notifications
