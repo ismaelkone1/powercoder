@@ -1,4 +1,6 @@
-package app_java.bd;
+package bd;
+
+import bd.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,5 +28,6 @@ public class ClientBd {
             e.printStackTrace();
         }
     }
+
 }
 
