@@ -11,7 +11,7 @@ import org.postgresql.PGNotification;
 import org.postgresql.PGConnection;
 
 public class DatabaseConnection {
-    private static final String URL = "jdbc:postgresql://localhost:5432/ccd";
+    private static final String URL = "jdbc:postgresql://docketu.iutnc.univ-lorraine.fr:32421/ccd";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
 
@@ -29,44 +29,51 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            // Activer l'écoute du canal de notification
-            Statement stmt = conn.createStatement();
-            stmt.execute("LISTEN new_competence_besoin_channel;");
+        // try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        //     // Activer l'écoute du canal de notification
+        //     Statement stmt = conn.createStatement();
+        //     stmt.execute("LISTEN new_competence_besoin_channel;");
 
-            System.out.println("En attente de notifications sur le canal 'new_competence_besoin_channel'...");
+        //     System.out.println("En attente de notifications sur le canal 'new_competence_besoin_channel'...");
 
-            // Boucle pour écouter les notifications
-            while (true) {
-                // Attente d'une notification
-                PGNotification[] notifications = ((PGConnection) conn).getNotifications();
-                if (notifications != null) {
-                    for (PGNotification notification : notifications) {
-                        System.out.println("Notification reçue: " + notification.getParameter());
+        //     // Boucle pour écouter les notifications
+        //     while (true) {
+        //         // Attente d'une notification
+        //         PGNotification[] notifications = ((PGConnection) conn).getNotifications();
+        //         if (notifications != null) {
+        //             for (PGNotification notification : notifications) {
+        //                 System.out.println("Notification reçue: " + notification.getParameter());
 
-                        //On lance l'évolution
-                        ArrayList<Affectation> affectations = Evolution.lancerEvolution(10);
+        //                 // //On lance l'évolution
+        //                 // ArrayList<Affectation> affectations = Evolution.lancerEvolution(20);
 
-                        //On met à jour la bd
-                        for (Affectation affectation : affectations) {
-                            String query = "INSERT INTO salarie_besoin (salarie_id, besoin_id) VALUES (?, ?)";
-                            PreparedStatement ps = conn.prepareStatement(query);
-                            ps.setInt(1, affectation.getSalarie().getId());
-                            ps.setInt(2, affectation.getBesoin().getId());
-                            ps.executeUpdate();
-                        }
+        //                 // System.out.println("Affectations générées : " + affectations);
 
-                        // Vous pouvez maintenant traiter les données JSON envoyées par la procédure stockée
-                        String json = notification.getParameter();
-                        // Utiliser une bibliothèque JSON pour traiter le message
-                        System.out.println("Détails du besoin : " + json);
-                    }
-                }
-                Thread.sleep(1000); // Attendre un peu avant la prochaine vérification des notifications
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //                 // //On met à jour la bd
+        //                 // for (Affectation affectation : affectations) {
+        //                 //     //vérifie si l'affectation est déjà présente
+        //                 //     String queryCheck = "SELECT * FROM salarie_besoin WHERE salarie_id = ? AND besoin_id = ?";
+        //                 //     PreparedStatement psCheck = conn.prepareStatement(queryCheck);
+        //                 //     psCheck.setInt(1, affectation.getSalarie().getId());
+        //                 //     psCheck.setInt(2, affectation.getBesoin().getId());
+        //                 //     ResultSet rsCheck = psCheck.executeQuery();
+        //                 //     if (rsCheck.next()) {
+        //                 //         //Si l'affectation est déjà présente, on ne fait rien
+        //                 //         continue;
+        //                 //     }
+        //                 // }
+
+        //                 // Vous pouvez maintenant traiter les données JSON envoyées par la procédure stockée
+        //                 String json = notification.getParameter();
+        //                 // Utiliser une bibliothèque JSON pour traiter le message
+        //                 System.out.println("Détails du besoin : " + json);
+        //             }
+        //         }
+        //         Thread.sleep(1000); // Attendre un peu avant la prochaine vérification des notifications
+        //     }
+        // } catch (Exception e) {
+        //     e.printStackTrace();
+        // }
     }
 
     //méthode pour récupérer les salariés

@@ -86,10 +86,12 @@ public class Evolution {
         // Sélectionner la moitié des meilleures affectations
         int taille = affectationsTriee.size();
         int moitie = taille / 2;
-
+        
         for (int i = 0; i < moitie; i++) {
             meilleuresAffectations.add(affectationsTriee.get(i).getKey());
         }
+
+        System.out.println("Meilleures affectations : " + meilleuresAffectations);
 
         // Générer de nouvelles affectations via croisement
         ArrayList<ArrayList<Affectation>> enfants = new ArrayList<>();
@@ -100,34 +102,50 @@ public class Evolution {
             ArrayList<Affectation> parent2 = meilleuresAffectations.get(random.nextInt(meilleuresAffectations.size()));
 
             // Créer un enfant en croisant les parents
-            ArrayList<Affectation> enfant = croiserAffectations(parent1, parent2);
+            ArrayList<Affectation> enfant = croiserAffectations(parent1, parent2, enfants);
             enfants.add(enfant);
+            System.out.println("Enfantsss : " + enfants);
+
         }
+
 
         // Combiner les meilleures affectations et les nouvelles affectations
         ArrayList<ArrayList<Affectation>> nouvellePopulation = new ArrayList<>();
         nouvellePopulation.addAll(meilleuresAffectations);
+        System.out.println("Nouvelle population : " + nouvellePopulation);
+
         nouvellePopulation.addAll(enfants);
 
         return nouvellePopulation;
     }
 
-    private ArrayList<Affectation> croiserAffectations(ArrayList<Affectation> parent1, ArrayList<Affectation> parent2) {
+    private ArrayList<Affectation> croiserAffectations(ArrayList<Affectation> parent1, ArrayList<Affectation> parent2, ArrayList<ArrayList<Affectation>> enfants) {
         ArrayList<Affectation> enfant = new ArrayList<>();
         Random random = new Random();
         for (int i = 0; i < parent1.size(); i++) {
-            //on vérifie que l'enfant n'a pas déjà cette affectation
-            Affectation affectation = randomChoice(
+            Affectation newAffectaion = randomChoice(
                     parent1.get(random.nextInt(parent1.size())),
                     parent2.get(random.nextInt(parent2.size()))
             );
-            while (enfant.contains(affectation) && meilleuresAffectations.contains(affectation)) {
-                affectation = randomChoice(
+
+            //On vérifie que l'enfants n'est pas déjà dans une des listes des enfants
+            for (ArrayList<Affectation> enfantList : enfants) {
+                while (enfantList.contains(newAffectaion)) {
+                    newAffectaion = randomChoice(
+                            parent1.get(random.nextInt(parent1.size())),
+                            parent2.get(random.nextInt(parent2.size()))
+                    );
+                }
+            }
+
+            //on vérifie que l'enfant n'a pas déjà cette affectation
+            while (enfant.contains(newAffectaion) && meilleuresAffectations.contains(newAffectaion)) {
+                newAffectaion = randomChoice(
                         parent1.get(random.nextInt(parent1.size())),
                         parent2.get(random.nextInt(parent2.size()))
                 );
             }
-            enfant.add(affectation);
+            enfant.add(newAffectaion);
         }
         return enfant;
     }
@@ -198,6 +216,7 @@ public class Evolution {
 
             // Appliquer l'évolution
             affectations = evolution.evoluer(stats);
+            
         }
 
         // Retourner la meilleure affectation trouvée
